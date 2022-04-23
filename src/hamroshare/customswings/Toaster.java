@@ -1,15 +1,15 @@
 package hamroshare.customswings;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.swing.JPanel;
 
 public class Toaster {
 
-    public int stime = 6000;
+    public int stime = 1000;
     private static final int STARTING_Y_POS = 15;
     private static final int SPACER_DISTANCE = 15;
     private static final ArrayList<ToasterBody> toasterBodies = new ArrayList<>();

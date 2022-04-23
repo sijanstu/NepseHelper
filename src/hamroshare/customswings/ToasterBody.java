@@ -1,9 +1,11 @@
 package hamroshare.customswings;
 
-import hamroshare.customswings.UIUtils;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JPanel;
 
 class ToasterBody extends JPanel {
     private static final int TOAST_PADDING = 15;
@@ -43,7 +45,7 @@ class ToasterBody extends JPanel {
                 repaint();
                 try {
                     Thread.sleep(5);
-                } catch (Exception ignored) {
+                } catch (InterruptedException ignored) {
                 }
             }
         }).start();

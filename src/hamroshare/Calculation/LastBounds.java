@@ -9,12 +9,17 @@ import javax.swing.JFrame;
  * @author Sijan Bhandari
  */
 public class LastBounds {
-    public static Rectangle bound;
+    public static Rectangle storedBound;
     static public Rectangle getBounds(JFrame frame){
         
-        if(bound==null){
+        if(storedBound==null){
             return frame.getBounds();
         }
-        return bound;
+        Rectangle newBound=new Rectangle();
+        newBound.x=storedBound.x;
+        newBound.y=storedBound.y;
+        newBound.width=frame.getWidth();
+        newBound.height=frame.getHeight();
+        return newBound;
     }
 }

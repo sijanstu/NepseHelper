@@ -1,5 +1,7 @@
 package hamroshare.components;
 
+import Algorithms.DashBoard;
+import Algorithms.RefreshLiveData;
 import hamroshare.Calculation.CloseController;
 import hamroshare.Calculation.GUIDimension;
 import hamroshare.Calculation.LastBounds;
@@ -11,8 +13,15 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 /**
  *
@@ -26,17 +35,33 @@ public final class Dash extends javax.swing.JFrame {
     public static String username;
 
     public Dash() {
+        File file = new File("user.txt");
+        if (!file.exists()) {
+            try {
+                try ( BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+                    bufferedWriter.write(LoginController.user.getID() + "\n" + LoginController.user.getUsername());
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Dash.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         initComponents();
+        changeMenu(1);
+        changeMenu(0);
         setDraggable(menu, this.getBounds());
         Info.display(menu, "Login Success", 1, 500);
         EventMenu event;
         event = (int index) -> {
             switch (index) {
                 case 0 -> {
+                    changeMenu(0);
+                }
+                case 1 -> {
+                    changeMenu(1);
                 }
                 case 8 -> {
                     dispose();
-                    LastBounds.bound=this.getBounds();
+                    LastBounds.storedBound = this.getBounds();
                     Login.main();
                 }
                 default -> {
@@ -45,18 +70,40 @@ public final class Dash extends javax.swing.JFrame {
             }
         };
 
-        this.setBackground(
-                new Color(0, 0, 0, 0));
+        this.setBackground(new Color(0, 0, 0, 0));
+        menu.setBackground(new Color(5, 5, 5, 5));
         //jp3.setOpaque(false);
         //jp3.setBackground (
 
         //new Color(0, 0, 0, 0));
         passmesdialogue();
 
+        menu.user2.setText(LoginController.user.getUsername());
+        startBar();
+
         menu.initMenu(event);
 
-        menu.user.setText(LoginController.user.getUsername());
-        startBar();
+    }
+
+    void changeMenu(int index) {
+        switch (index) {
+            case 0 -> {
+                Home.gauch.setValueWithAnimation(0);
+                DashBoard.gaugeChart = Home.gauch;
+                new DashBoard().start();
+                dash1.setVisible(false);
+                dash0.setVisible(true);
+            }
+            case 1 -> {
+                JTable table = LiveTable.tbl;
+                RefreshLiveData.tbl = table;
+                new RefreshLiveData().start();
+                dash0.setVisible(false);
+                dash1.setVisible(true);
+            }
+            default ->
+                throw new AssertionError();
+        }
     }
 
     void startBar() {
@@ -64,12 +111,13 @@ public final class Dash extends javax.swing.JFrame {
     }
 
     void passmesdialogue() {
-        // new GUIDimension(this, "login");
-        setBounds(LastBounds.getBounds(this));
+        GUIDimension guiDimension = new GUIDimension(this, "login");
+        //setBounds(LastBounds.getBounds(this));
         MessageDialog.fram = this;
     }
     private Point currentLocation;
-    JFrame jf=this;
+    JFrame jf = this;
+
     public void setDraggable(JPanel panel, Rectangle bounds) {
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -93,9 +141,10 @@ public final class Dash extends javax.swing.JFrame {
     private void initComponents() {
 
         menu = new hamroshare.components.Menu();
+        dash1 = new hamroshare.components.LiveTable();
+        dash0 = new hamroshare.components.Home();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowIconified(java.awt.event.WindowEvent evt) {
@@ -105,19 +154,16 @@ public final class Dash extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 8, 170, 420));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        dash1.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                dash1VetoableChange(evt);
+            }
+        });
+        getContentPane().add(dash1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
+        getContentPane().add(dash0, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -129,6 +175,9 @@ public final class Dash extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         CloseController.bar.setVisible(true);
     }//GEN-LAST:event_formWindowOpened
+
+    private void dash1VetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_dash1VetoableChange
+    }//GEN-LAST:event_dash1VetoableChange
 
     public static void main() {
         /* Set the Nimbus look and feel */
@@ -151,15 +200,14 @@ public final class Dash extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Dash().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Dash().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static hamroshare.components.Menu menu;
+    private hamroshare.components.Home dash0;
+    private hamroshare.components.LiveTable dash1;
+    private hamroshare.components.Menu menu;
     // End of variables declaration//GEN-END:variables
 }

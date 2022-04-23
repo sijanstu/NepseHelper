@@ -1,6 +1,5 @@
 package hamroshare.Events;
 
-import hamroshare.Calculation.CloseController;
 import hamroshare.DataBase.Connector;
 import hamroshare.Main.Start;
 import hamroshare.components.Login;
@@ -20,12 +19,13 @@ public class JFrameCloser extends TimerTask {
         if (!isfirst) {
             System.out.println("retrying");
             j1.j2.setText("Retrying");
+            Connector con = new Connector();
+            con.start();
         }
         isfirst = false;
         if (Connector.isconnected) {
             System.out.println("opened Login");
             close(j1);
-            new Login();
             Login.main();
             timer.cancel();
         }
@@ -38,7 +38,7 @@ public class JFrameCloser extends TimerTask {
             if (!Connector.isconnected) {
                 timer.cancel();
                 timer = new Timer();
-                timer.schedule(new JFrameCloser(), 1700, 500);
+                timer.schedule(new JFrameCloser(), 1700, 1000);
             } else {
                 timer.cancel();
                 timer = new Timer();

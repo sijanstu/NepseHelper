@@ -6,7 +6,6 @@ import hamroshare.Calculation.GUIDimension;
 import hamroshare.Calculation.LastBounds;
 import hamroshare.Events.Info;
 import hamroshare.Events.LoginButton;
-import static hamroshare.components.Dash.menu;
 import hamroshare.customswings.PasswordButton;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -34,25 +33,26 @@ public final class Login extends JFrame {
     public Login() {
 
         initComponents();
-        
+
         toEdge();
         setIcon();
         setCloseIcon();
-        user.setBackground(new Color(0, 0, 0, 0));
-        user.setForeground(Color.white);
-        user.setPhColor(Color.white);
-        user.setCaretColor(Color.white);
-        pass.setBackground(new Color(0, 0, 0, 0));
-        pass.setForeground(Color.white);
-        pass.setPhColor(Color.white);
-        pass.setCaretColor(Color.white);
+        usern.setBackground(new Color(0, 0, 0, 0));
+        usern.setForeground(Color.white);
+        usern.setPhColor(Color.white);
+        usern.setCaretColor(Color.white);
+        passn.setBackground(new Color(0, 0, 0, 0));
+        passn.setForeground(Color.white);
+        passn.setPhColor(Color.white);
+        passn.setCaretColor(Color.white);
         setBackground(new Color(0, 0, 0, 0));
-        
+
         setDraggable(jp1, this.getBounds());
         setBounds(LastBounds.getBounds(this));
         startBar();
     }
-JFrame jf=this;
+    JFrame jf = this;
+
     public void setDraggable(JPanel panel, Rectangle bounds) {
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -67,8 +67,8 @@ JFrame jf=this;
                 Point currentScreenLocation = e.getLocationOnScreen();
                 setLocation(currentScreenLocation.x - currentLocation.x, currentScreenLocation.y - currentLocation.y);
                 CloseController.changePosition(jf);
-                
-               // System.out.println("dragged");
+
+                // System.out.println("dragged");
             }
         });
     }
@@ -83,11 +83,11 @@ JFrame jf=this;
     }
 
     void setIcon() {
-        new AutoSetIcon(label, "/icon/user.png");
+        AutoSetIcon autoSetIcon = new AutoSetIcon(label, "/icon/user.png");
     }
 
     void toEdge() {
-        new GUIDimension(this, "login");
+        GUIDimension guiDimension = new GUIDimension(this, "login");
     }
 
     @SuppressWarnings("unchecked")
@@ -95,8 +95,8 @@ JFrame jf=this;
     private void initComponents() {
 
         jp1 = new hamroshare.customswings.RoundPanel();
-        user = new RSMaterialComponent.RSTextFieldMaterial();
-        pass = new RSMaterialComponent.RSPasswordMaterial();
+        usern = new RSMaterialComponent.RSTextFieldMaterial();
+        passn = new RSMaterialComponent.RSPasswordMaterial();
         lgbtn = new hamroshare.customswings.LoginButton();
         label = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -108,45 +108,51 @@ JFrame jf=this;
         setType(java.awt.Window.Type.UTILITY);
 
         jp1.setBackground(new java.awt.Color(51, 51, 51));
+        jp1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 1, true));
+        jp1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        user.setBackground(new java.awt.Color(51, 51, 51));
-        user.setForeground(new java.awt.Color(255, 255, 255));
-        user.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        user.setColorMaterial(new java.awt.Color(0, 153, 153));
-        user.setOpaque(false);
-        user.setPhColor(new java.awt.Color(255, 255, 255));
-        user.setPlaceholder("  Username");
-        user.addActionListener(new java.awt.event.ActionListener() {
+        usern.setBackground(new java.awt.Color(51, 51, 51));
+        usern.setForeground(new java.awt.Color(255, 255, 255));
+        usern.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        usern.setColorMaterial(new java.awt.Color(0, 153, 153));
+        usern.setOpaque(false);
+        usern.setPhColor(new java.awt.Color(255, 255, 255));
+        usern.setPlaceholder("  Username");
+        usern.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userActionPerformed(evt);
+                usernActionPerformed(evt);
             }
         });
+        jp1.add(usern, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 132, 170, 40));
 
-        pass.setBackground(new java.awt.Color(51, 51, 51));
-        pass.setForeground(new java.awt.Color(255, 255, 255));
-        pass.setColorMaterial(new java.awt.Color(0, 153, 153));
-        pass.setOpaque(false);
-        pass.setPhColor(new java.awt.Color(255, 255, 255));
-        pass.setPlaceholder("  Password");
-        pass.addFocusListener(new java.awt.event.FocusAdapter() {
+        passn.setBackground(new java.awt.Color(51, 51, 51));
+        passn.setForeground(new java.awt.Color(255, 255, 255));
+        passn.setColorMaterial(new java.awt.Color(0, 153, 153));
+        passn.setOpaque(false);
+        passn.setPhColor(new java.awt.Color(255, 255, 255));
+        passn.setPlaceholder("  Password");
+        passn.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                passFocusGained(evt);
+                passnFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                passFocusLost(evt);
+                passnFocusLost(evt);
             }
         });
-        pass.addActionListener(new java.awt.event.ActionListener() {
+        passn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
+                passnActionPerformed(evt);
             }
         });
+        jp1.add(passn, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 182, 170, -1));
 
         lgbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lgbtnMouseClicked(evt);
             }
         });
+        jp1.add(lgbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 230, 170, 42));
+        jp1.add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 120));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 204, 204));
@@ -158,42 +164,7 @@ JFrame jf=this;
                 jLabel2MouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout jp1Layout = new javax.swing.GroupLayout(jp1);
-        jp1.setLayout(jp1Layout);
-        jp1Layout.setHorizontalGroup(
-            jp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lgbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jp1Layout.createSequentialGroup()
-                            .addGap(17, 17, 17)
-                            .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(21, 21, 21))
-        );
-        jp1Layout.setVerticalGroup(
-            jp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jp1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jp1Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(lgbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jp1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
+        jp1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 284, 164, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,45 +174,55 @@ JFrame jf=this;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jp1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jp1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void lgbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgbtnMouseClicked
-        new LoginButton().clicked(this);
-
+        try {
+            new LoginButton().clicked(this);
+        } catch (IOException ex) {
+            Info.display(jp1, "Application Error", 0, 2000);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Info.display(jp1, "Application Error", 0, 2000);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_lgbtnMouseClicked
 
-    private void passFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passFocusGained
-        new PasswordButton(label, "clicked", "/icon/userpass.png");
-    }//GEN-LAST:event_passFocusGained
+    private void passnFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passnFocusGained
+        PasswordButton passwordButton = new PasswordButton(label, "clicked", "/icon/userpass.png");
+    }//GEN-LAST:event_passnFocusGained
 
-    private void passFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passFocusLost
-        new PasswordButton(label, "notclicked", "/icon/user.png");
-    }//GEN-LAST:event_passFocusLost
+    private void passnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passnFocusLost
+        PasswordButton passwordButton = new PasswordButton(label, "notclicked", "/icon/user.png");
+    }//GEN-LAST:event_passnFocusLost
 
-    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+    private void usernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userActionPerformed
+    }//GEN-LAST:event_usernActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         try {
             Desktop.getDesktop().browse(new URI("https://adminhamroapi.herokuapp.com/register.php"));
         } catch (IOException e1) {
-            Info.display(menu, "signup from browser", 0, 500);
+            Info.display(jp1, "signup from browser", 0, 500);
         } catch (URISyntaxException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        new LoginButton().clicked(this);
+    private void passnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passnActionPerformed
+        try {
+            new LoginButton().clicked(this);
+        } catch (IOException ex) {
+            Info.display(jp1, "Application Error", 0, 2000);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-    }//GEN-LAST:event_passActionPerformed
+    }//GEN-LAST:event_passnActionPerformed
     Process p;
 
     public static void main() {
@@ -290,7 +271,7 @@ JFrame jf=this;
     public hamroshare.customswings.RoundPanel jp1;
     public javax.swing.JLabel label;
     private hamroshare.customswings.LoginButton lgbtn;
-    public RSMaterialComponent.RSPasswordMaterial pass;
-    public RSMaterialComponent.RSTextFieldMaterial user;
+    public RSMaterialComponent.RSPasswordMaterial passn;
+    public RSMaterialComponent.RSTextFieldMaterial usern;
     // End of variables declaration//GEN-END:variables
 }

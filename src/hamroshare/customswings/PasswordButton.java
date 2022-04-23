@@ -1,6 +1,5 @@
 package hamroshare.customswings;
 
-import hamroshare.components.Login;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

@@ -1,6 +1,7 @@
 package hamroshare.Events;
 import hamroshare.DataBase.LoginController;
 import hamroshare.components.Login;
+import java.io.IOException;
 
 /**
  *
@@ -8,7 +9,8 @@ import hamroshare.components.Login;
  */
 public class LoginButton {
 
-    public void clicked(Login jframe) {
+    public void clicked(Login jframe) throws IOException {
+        
         LoginController.getUser(jframe);
     }
 }

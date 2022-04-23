@@ -114,10 +114,10 @@ public class MessageDialog extends javax.swing.JDialog {
         background1.setBackground(new java.awt.Color(51, 51, 51));
         background1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        cmdCancel.setBackground(new java.awt.Color(245, 71, 71));
+        cmdCancel.setBackground(new java.awt.Color(0, 255, 0));
         cmdCancel.setText("Cancel");
-        cmdCancel.setColorHover(new java.awt.Color(255, 74, 74));
-        cmdCancel.setColorPressed(new java.awt.Color(235, 61, 61));
+        cmdCancel.setColorHover(new java.awt.Color(51, 255, 51));
+        cmdCancel.setColorPressed(new java.awt.Color(51, 102, 0));
         cmdCancel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         cmdCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,7 +125,10 @@ public class MessageDialog extends javax.swing.JDialog {
             }
         });
 
-        cmdOK.setText("OK");
+        cmdOK.setBackground(new java.awt.Color(255, 51, 51));
+        cmdOK.setText("Yes, Exit Now");
+        cmdOK.setColorHover(new java.awt.Color(255, 102, 102));
+        cmdOK.setColorPressed(new java.awt.Color(153, 0, 0));
         cmdOK.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         cmdOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

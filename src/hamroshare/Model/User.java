@@ -6,15 +6,15 @@ package hamroshare.Model;
  */
 public class User {
 
-    private final int ID;
+    private final String ID;
     private final String Username;
 
-    public User(int ID, String Username) {
+    public User(String ID, String Username) {
         this.ID = ID;
         this.Username = Username;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 

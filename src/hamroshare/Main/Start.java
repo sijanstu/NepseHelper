@@ -18,19 +18,32 @@ import javax.swing.ImageIcon;
  */
 public final class Start extends javax.swing.JFrame {
 
-    
-
     /**
      * Creates new form Start
      */
     public Start() {
+//        File file = new File("user.txt");
+//        if (false) {
+//            try {
+//                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+//                LoginController.user = new User(bufferedReader.readLine(), bufferedReader.readLine());
+//                LastBounds.storedBound = lg.getBounds();
+//                Dash.main();
+//                dispose();
+//            } catch (FileNotFoundException ex) {
+//                Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException ex) {
+//                Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
         initComponents();
-        this.setBackground(new Color(0,0,0,0));
-        new GUIDimension(this, "login");
+        this.setBackground(new Color(0, 0, 0, 0));
+        GUIDimension guiDimension = new GUIDimension(this, "login");
         setIcon();
         startBar();
-        MessageDialog.fram=this;
+        MessageDialog.fram = this;
         try {
+
             startTimer();
             Connector.getConnection();
         } catch (SQLException ex) {
@@ -39,12 +52,12 @@ public final class Start extends javax.swing.JFrame {
     }
 
     void startTimer() {
-        JFrameCloser.open(this,true);
+        JFrameCloser.open(this, true);
     }
 
     void startBar() {
-       CloseController.initBar();
-       CloseController.changePosition(this);
+        CloseController.initBar();
+        CloseController.changePosition(this);
     }
 
     void setIcon() {
@@ -73,6 +86,7 @@ public final class Start extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jp2.setBackground(new java.awt.Color(51, 51, 51));
+        jp2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 255)));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));

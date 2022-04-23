@@ -46,7 +46,7 @@ public class CloseController {
     public static void clicked() {
         MessageDialog obj = new MessageDialog();
         obj.setBounds(bound.x - 50, bound.y - 50, bound.width - 6, bound.height - 6);
-        obj.showMessage("Are You Sure?", "Please save any data before closing");
+        obj.showMessage("Are You Sure?", "You can also minimize for later...");
         obj.background1.setBackground(Color.BLACK);
         obj.background1.setForeground(Color.WHITE);
         if (obj.getMessageType() == MessageDialog.MessageType.OK) {
