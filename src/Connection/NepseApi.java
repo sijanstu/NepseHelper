@@ -9,6 +9,7 @@ import hamroshare.Model.Company;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,14 +32,53 @@ public final class NepseApi {
     private static Document page;
     private static Element table;
     private static Elements head, row;
-    public void init() throws IOException{
+
+    public void init() throws IOException {
         startPage();
         RefreshData();
     }
+
     static void deleteAll() {
         for (String comp : getAllcompany()) {
             DBFirebase.databaseFirestore.collection("companies").document(comp).delete();
         }
+    }
+
+    public String[] getAllIndexNames() {
+        Elements indexElements = page.getElementsByClass("indexTicker_basic-info");
+        String[] indexList = new String[indexElements.size()];
+        int count = 0;
+        for (Element indexElement : indexElements) {
+            indexList[count] = indexElement.getElementsByTag("span").text();
+            count++;
+        }
+        return indexList;
+    }
+
+    public void getAllIndexes() {
+        String[] indexNames = getAllIndexNames();
+        Index[] indexes = new Index[indexNames.length];
+        int count = 0;
+        Elements indexElements = page.getElementsByClass("indexTicker_more-info");
+        System.out.println(indexElements);
+        System.out.println(indexElements.size());
+        for (String indexName : indexNames) {
+            Index index=new Index();
+            index.setName(indexName);
+            index.setValue(indexElements.get(count).child(0).text());
+            index.setChange(indexElements.get(count).child(2).text().replace("%", ""));
+            System.out.println(index);
+            count++;
+        }
+    }
+
+    public Index getNepseIndex() {
+        Elements indexElements = page.getElementsByClass("indexTicker_more-info");
+        Element indexElement = indexElements.get(6);
+        Element name = page.getElementsByClass("indexTicker_basic-info").get(6).getElementsByClass("indexTicker_itemName").get(0);
+        Element value = indexElement.getElementsByClass("indexTicker_more-info").get(0).child(0);
+        Element change = indexElement.getElementsByClass("indexTicker_more-info").get(0).child(2);
+        return new Index(name.text(), value.text(), change.text());
     }
 
     static public Company[] getAllCompany() {
@@ -121,7 +161,7 @@ public final class NepseApi {
         return data;
     }
 
-    private void startPage() throws MalformedURLException, IOException {
+    public void startPage() throws MalformedURLException, IOException {
         page = Jsoup.parse(new URL(URL), TIMEOUT);
         table = page.getElementById("tbl_LiveStock");
         row = page.getElementsByTag("tr");
@@ -154,14 +194,15 @@ public final class NepseApi {
         return data;
 
     }
-    public Company[] getAllCompanyDirectly() throws IOException{
+
+    public Company[] getAllCompanyDirectly() throws IOException {
         startPage();
-        String[] companiesNames=getAllcompany();
-        Company[] companies=new Company[companiesNames.length];
-        int count=0;
-        for(String companyName:companiesNames){
-            String[] companyDetails=getBySymbol(companyName);
-            Company company=new Company();
+        String[] companiesNames = getAllcompany();
+        Company[] companies = new Company[companiesNames.length];
+        int count = 0;
+        for (String companyName : companiesNames) {
+            String[] companyDetails = getBySymbol(companyName);
+            Company company = new Company();
             company.setSymbol(companyDetails[0]);
             company.setClosingprice(companyDetails[1]);
             company.setLtv(companyDetails[2]);
@@ -172,7 +213,7 @@ public final class NepseApi {
             company.setQuantity(companyDetails[7]);
             company.setTransaction(companyDetails[8]);
             company.setDifference(companyDetails[9]);
-            companies[count]=company;
+            companies[count] = company;
             count++;
         }
         return companies;

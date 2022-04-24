@@ -3,10 +3,6 @@ package hamroshare.components;
 import Algorithms.SearchLiveData;
 import hamroshare.customswings.ScrollBarCustom;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -45,6 +41,7 @@ public class LiveTable extends javax.swing.JPanel {
         setOpaque(false);
 
         dashpanel.setBackground(new java.awt.Color(51, 51, 51));
+        dashpanel.setForeground(new java.awt.Color(102, 102, 102));
         dashpanel.setPreferredSize(new java.awt.Dimension(162, 418));
         dashpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -75,6 +72,11 @@ public class LiveTable extends javax.swing.JPanel {
 
         dashpanel.add(sp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 390, 390));
 
+        srchText.setBackground(new java.awt.Color(51, 51, 51));
+        srchText.setForeground(new java.awt.Color(255, 255, 255));
+        srchText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        srchText.setColorMaterial(new java.awt.Color(255, 255, 255));
+        srchText.setOpaque(true);
         srchText.setPlaceholder("Search Company");
         srchText.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {

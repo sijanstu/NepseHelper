@@ -24,13 +24,23 @@ public class Home extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        index4 = new javax.swing.JLabel();
         dashpanel = new hamroshare.customswings.RoundPanel();
         jSeparator1 = new javax.swing.JSeparator();
         gauch = new hamroshare.customswings.GaugeChart();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        percentage = new javax.swing.JLabel();
+        positivityText = new javax.swing.JLabel();
+        nepseName = new javax.swing.JLabel();
+        value = new javax.swing.JLabel();
+        change = new javax.swing.JLabel();
+
+        index4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        index4.setForeground(new java.awt.Color(255, 255, 255));
+        index4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        index4.setText("Change Percentage: 3500");
 
         setOpaque(false);
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dashpanel.setBackground(new java.awt.Color(51, 51, 51));
         dashpanel.setPreferredSize(new java.awt.Dimension(162, 418));
@@ -45,44 +55,46 @@ public class Home extends javax.swing.JPanel {
         gauch.setValue(60);
         dashpanel.add(gauch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 230, 130));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Nepse Index:");
-        dashpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 270, 40));
+        percentage.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        percentage.setForeground(new java.awt.Color(255, 255, 255));
+        percentage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashpanel.add(percentage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 270, 40));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Market Positivity");
-        dashpanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 250, 70));
+        positivityText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        positivityText.setForeground(new java.awt.Color(255, 255, 255));
+        positivityText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        positivityText.setText("Market Positivity");
+        dashpanel.add(positivityText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 250, 70));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(dashpanel, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(dashpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        nepseName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        nepseName.setForeground(new java.awt.Color(255, 255, 255));
+        nepseName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nepseName.setText("Nepse");
+        dashpanel.add(nepseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 270, 40));
+
+        value.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        value.setForeground(new java.awt.Color(255, 255, 255));
+        value.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashpanel.add(value, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 270, 40));
+
+        change.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        change.setForeground(new java.awt.Color(255, 255, 255));
+        change.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashpanel.add(change, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 270, 40));
+
+        add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 272, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JLabel change;
     private hamroshare.customswings.RoundPanel dashpanel;
     public static hamroshare.customswings.GaugeChart gauch;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel index4;
     private javax.swing.JSeparator jSeparator1;
+    public static javax.swing.JLabel nepseName;
+    public static javax.swing.JLabel percentage;
+    public static javax.swing.JLabel positivityText;
+    public static javax.swing.JLabel value;
     // End of variables declaration//GEN-END:variables
 }
