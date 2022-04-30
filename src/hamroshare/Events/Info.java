@@ -1,6 +1,6 @@
-package hamroshare.Events;
+package hamroshare.eventhandlers;
 
-import hamroshare.customswings.Toaster;
+import hamroshare.uicomponents.Toaster;
 import javax.swing.JPanel;
 
 /**

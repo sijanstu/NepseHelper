@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/components/Home.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/Algorithms/DashBoard.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/Connection/NepseApi.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/Algorithms/RefreshLiveData.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/config/RegisteredUser.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/ui/Login.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/Events/UserRegistration.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/ui/Dash.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/ui/TechnicalAnalysis.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,4 +1,4 @@
-package hamroshare.Events;
+package hamroshare.eventhandlers;
 
 public interface EventMenu {
 
