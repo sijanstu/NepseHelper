@@ -3,11 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/config/RegisteredUser.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/ui/Login.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/Events/UserRegistration.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/ui/Dash.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/NetBeansProjects/NepseHelper/src/hamroshare/ui/TechnicalAnalysis.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/databases/NepseApi.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/Technical.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/Login.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/dtos/User.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/Events/UserRegistration.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/config/RegisteredUser.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/dataalgorithms/FetchData.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/StockPrices.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/dataalgorithms/SearchDataAlgo.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/Menu.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/dataalgorithms/LiveDataAlgo.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/databases/CheckConnection.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/databases/getPerson.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/LiveTable.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/Dash.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/dataalgorithms/SimpleMovingAverage.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/Predction.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/mainpackage/MainClass.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/databases/DBFirebase.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/dtos/UserModel.java</file>
         </group>
     </open-files>
 </project-private>

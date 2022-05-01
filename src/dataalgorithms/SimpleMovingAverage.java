@@ -23,10 +23,12 @@ public class SimpleMovingAverage {
     }
 
     public void newPrice(double price) {
-        sum += price;
-        window.add(price);
-        if (window.size() > period) {
-            sum -= window.remove();
+        if (price >= 1) {
+            sum += price;
+            window.add(price);
+            if (window.size() > period) {
+                sum -= window.remove();
+            }
         }
     }
 

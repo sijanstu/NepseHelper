@@ -25,14 +25,13 @@ public final class Dash extends javax.swing.JFrame {
     /**
      * Creates new form Dash
      */
-    public static String defaultCompany = "dhpl";
 
     public Dash() {
         
         initComponents();
         menu.imageAvatar2.setIcon(RegisteredUser.getProfileIconResized(menu.imageAvatar2.getBounds()));
         Menu.user2.setText(RegisteredUser.registeredUser.getUsername());
-        StockPrices.fetchCompaniesInJComboBox(TechnicalAnalysis.companyComboBox);
+        StockPrices.fetchCompaniesInJComboBox(Technical.companyComboBox);
         LiveDataAlgo.init();
         DashBoardAlgo.init();
         new AutoSetIcon().set(close, "/icon/close.png");
@@ -89,6 +88,7 @@ public final class Dash extends javax.swing.JFrame {
                 dash0.setVisible(false);
                 dash1.setVisible(false);
                 dash3.setVisible(true);
+                
             }
             default ->
                 throw new AssertionError();
@@ -130,7 +130,7 @@ public final class Dash extends javax.swing.JFrame {
         dash0 = new hamroshare.ui.Home();
         close = new javax.swing.JLabel();
         close1 = new javax.swing.JLabel();
-        dash3 = new hamroshare.ui.TechnicalAnalysis();
+        dash3 = new hamroshare.ui.Technical();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -180,7 +180,7 @@ public final class Dash extends javax.swing.JFrame {
             }
         });
         getContentPane().add(close1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 20, 20));
-        getContentPane().add(dash3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 390, 420));
+        getContentPane().add(dash3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -251,7 +251,7 @@ public final class Dash extends javax.swing.JFrame {
     public javax.swing.JLabel close1;
     private hamroshare.ui.Home dash0;
     private hamroshare.ui.LiveTable dash1;
-    private hamroshare.ui.TechnicalAnalysis dash3;
+    private hamroshare.ui.Technical dash3;
     private hamroshare.ui.Menu menu;
     // End of variables declaration//GEN-END:variables
 }

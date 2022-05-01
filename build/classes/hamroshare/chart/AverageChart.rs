@@ -1,2 +1,0 @@
-hamroshare.chart.AverageChart
-hamroshare.chart.UpdateLineChart

@@ -34,19 +34,17 @@ public class LiveTable extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dashpanel = new hamroshare.uicomponents.RoundPanel();
+        roundPanel1 = new hamroshare.uicomponents.RoundPanel();
         sp1 = new javax.swing.JScrollPane();
         tbl = new rojerusan.RSTableMetro();
         srchText = new rojeru_san.rsfield.RSTextMaterial();
         date = new javax.swing.JLabel();
 
+        setOpaque(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        dashpanel.setBackground(new java.awt.Color(51, 51, 51));
-        dashpanel.setForeground(new java.awt.Color(102, 102, 102));
-        dashpanel.setOpaque(true);
-        dashpanel.setPreferredSize(new java.awt.Dimension(162, 418));
-        dashpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         sp1.setForeground(new java.awt.Color(51, 51, 51));
         sp1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -73,7 +71,7 @@ public class LiveTable extends javax.swing.JPanel {
         tbl.setFocusable(false);
         sp1.setViewportView(tbl);
 
-        dashpanel.add(sp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 390, 390));
+        roundPanel1.add(sp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 390, 390));
 
         srchText.setBackground(new java.awt.Color(51, 51, 51));
         srchText.setForeground(new java.awt.Color(255, 255, 255));
@@ -84,13 +82,13 @@ public class LiveTable extends javax.swing.JPanel {
                 srchTextCaretUpdate(evt);
             }
         });
-        dashpanel.add(srchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
+        roundPanel1.add(srchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
 
         date.setForeground(new java.awt.Color(255, 255, 255));
         date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        dashpanel.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 220, 30));
+        roundPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 220, 30));
 
-        add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 392, -1));
+        add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -2, 390, 420));
     }// </editor-fold>//GEN-END:initComponents
 
     private void sp1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_sp1ComponentResized
@@ -104,8 +102,8 @@ public class LiveTable extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private hamroshare.uicomponents.RoundPanel dashpanel;
     public static javax.swing.JLabel date;
+    private hamroshare.uicomponents.RoundPanel roundPanel1;
     private javax.swing.JScrollPane sp1;
     private rojeru_san.rsfield.RSTextMaterial srchText;
     public static rojerusan.RSTableMetro tbl;

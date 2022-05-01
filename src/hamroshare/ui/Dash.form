@@ -94,10 +94,10 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="hamroshare.ui.TechnicalAnalysis" name="dash3">
+    <Component class="hamroshare.ui.Technical" name="dash3">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="170" y="20" width="390" height="420"/>
+          <AbsoluteConstraints x="170" y="20" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

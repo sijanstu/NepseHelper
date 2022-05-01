@@ -1,5 +1,6 @@
 package hamroshare.ui;
 
+import static hamroshare.ui.Technical.company;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,8 +22,10 @@ public class StockPrices {
 
     public static List<String> companyList = null;
 
-    public static double[] getCompanyPrices(String companyName) throws MalformedURLException, IOException {
-        Document page = Jsoup.parse(new URL(LINK + companyName), 20000);
+    public static double[] getCompanyPrices() throws MalformedURLException, IOException {
+        company=company.replace(".csv", "");
+                company = company.toUpperCase() + ".csv";
+        Document page = Jsoup.parse(new URL(LINK + company), 20000);
         Elements rows = page.getElementsByTag("tr");
         rows.remove(0);
         double[] prices = new double[rows.size()];
@@ -60,7 +63,7 @@ public class StockPrices {
                 for (String name : companyList) {
                     comboBox.addItem(name.replace(".csv", ""));
                 }
-                TechnicalAnalysis.initChart(companyList.get(0).replace(".csv", ""));
+                Technical.initChart(companyList.get(0).replace(".csv", ""));
             } catch (IOException ex) {
                 System.out.println("couldn't get Company list");
                 Logger.getLogger(StockPrices.class.getName()).log(Level.SEVERE, null, ex);
