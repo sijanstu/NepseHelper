@@ -4,7 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 !**/**/target/
-
+!**/**/build/
+!**/build
 ### NetBeans ###
 /nbbuild/
 /dist/
