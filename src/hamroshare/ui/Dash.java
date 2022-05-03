@@ -25,9 +25,8 @@ public final class Dash extends javax.swing.JFrame {
     /**
      * Creates new form Dash
      */
-
     public Dash() {
-        
+
         initComponents();
         menu.imageAvatar2.setIcon(RegisteredUser.getProfileIconResized(menu.imageAvatar2.getBounds()));
         Menu.user2.setText(RegisteredUser.registeredUser.getUsername());
@@ -48,6 +47,9 @@ public final class Dash extends javax.swing.JFrame {
                 case 1 -> {
                     changeMenu(1);
                 }
+                case 2 -> {
+                    changeMenu(2);
+                }
                 case 3 -> {
                     changeMenu(3);
                 }
@@ -56,11 +58,11 @@ public final class Dash extends javax.swing.JFrame {
                     Login.main();
                 }
                 default -> {
-                    
+
                 }
             }
         };
-        
+
         this.setBackground(new Color(0, 0, 0, 0));
         menu.setBackground(new Color(5, 5, 5, 5));
         //jp3.setOpaque(false);
@@ -69,32 +71,42 @@ public final class Dash extends javax.swing.JFrame {
         //new Color(0, 0, 0, 0));
         passmesdialogue();
         menu.initMenu(event);
-        
+
     }
-    
+
     void changeMenu(int index) {
         switch (index) {
             case 0 -> {
                 dash0.setVisible(true);
                 dash1.setVisible(false);
+                dash2.setVisible(false);
                 dash3.setVisible(false);
+
             }
             case 1 -> {
                 dash0.setVisible(false);
                 dash1.setVisible(true);
+                dash2.setVisible(false);
+                dash3.setVisible(false);
+            }
+            case 2 -> {
+                dash0.setVisible(false);
+                dash1.setVisible(false);
+                dash2.setVisible(true);
                 dash3.setVisible(false);
             }
             case 3 -> {
                 dash0.setVisible(false);
                 dash1.setVisible(false);
+                dash2.setVisible(false);
                 dash3.setVisible(true);
-                
             }
+
             default ->
                 throw new AssertionError();
         }
     }
-    
+
     void passmesdialogue() {
         GUIDimension guiDimension = new GUIDimension(this, "login");
         //setBounds(LastBounds.getBounds(this));
@@ -102,7 +114,7 @@ public final class Dash extends javax.swing.JFrame {
     }
     private Point currentLocation;
     JFrame jf = this;
-    
+
     public void setDraggable(JPanel panel, Rectangle bounds) {
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -110,7 +122,7 @@ public final class Dash extends javax.swing.JFrame {
                 currentLocation = e.getPoint();
             }
         });
-        
+
         panel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -120,7 +132,7 @@ public final class Dash extends javax.swing.JFrame {
             }
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -131,6 +143,7 @@ public final class Dash extends javax.swing.JFrame {
         close = new javax.swing.JLabel();
         close1 = new javax.swing.JLabel();
         dash3 = new hamroshare.ui.Technical();
+        dash2 = new hamroshare.ui.Profile();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -181,6 +194,7 @@ public final class Dash extends javax.swing.JFrame {
         });
         getContentPane().add(close1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 20, 20));
         getContentPane().add(dash3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        getContentPane().add(dash2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -219,7 +233,7 @@ public final class Dash extends javax.swing.JFrame {
     private void close1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseExited
         MinimizeController.exitHover(close1);
     }//GEN-LAST:event_close1MouseExited
-    
+
     public static void main() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -251,6 +265,7 @@ public final class Dash extends javax.swing.JFrame {
     public javax.swing.JLabel close1;
     private hamroshare.ui.Home dash0;
     private hamroshare.ui.LiveTable dash1;
+    private hamroshare.ui.Profile dash2;
     private hamroshare.ui.Technical dash3;
     private hamroshare.ui.Menu menu;
     // End of variables declaration//GEN-END:variables
