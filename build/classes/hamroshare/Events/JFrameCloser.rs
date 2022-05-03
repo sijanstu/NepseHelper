@@ -1,1 +1,0 @@
-hamroshare.eventhandlers.JFrameCloser

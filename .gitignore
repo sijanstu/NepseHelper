@@ -11,7 +11,7 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-!**/build/
+!**/build/classes
 !**/src/test/**/build/
 /nbproject/
 /build/

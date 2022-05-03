@@ -1,2 +1,0 @@
-dataalgorithms.RefreshDash
-dataalgorithms.DashBoardAlgo
