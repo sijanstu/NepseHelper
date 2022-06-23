@@ -12,18 +12,18 @@ import javax.swing.JLabel;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends javax.swing.JPanel {
-
+ScrollBarCustom sb;
     private EventMenu event;
     public Menu() {
         initComponents();
         setOpaque(false);
         
         //user.setText(LoginController.user.getUsername());
-        ScrollBarCustom sb = new ScrollBarCustom();
-        sb.setForeground(new Color(130, 130, 130, 100));
-        sp1.setVerticalScrollBar(sb);
+        //sb = new ScrollBarCustom();
+        //sp1.setVerticalScrollBar(sb);
+        //sb.doLayout();
         pm1.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
-        sp1.setBackground(new Color(100,0,0,100));
+        //sp1.setBackground(new Color(100,0,0,100));
        // rp1.setBackground(new Color(100,0,0,100));
         //pm1.setBackground(new Color(100,0,0,100));
     }
@@ -32,7 +32,7 @@ public class Menu extends javax.swing.JPanel {
         this.event = event;
         addMenu(new ImageIcon(getClass().getResource("/icon/1.png")), "Dashboard", 0);
         addMenu(new ImageIcon(getClass().getResource("/icon/2.png")), "Live Market", 1);
-        addMenu(new ImageIcon(getClass().getResource("/icon/3.png")), "Portfolio", 2);
+        addMenu(new ImageIcon(getClass().getResource("/icon/3.png")), "Profile", 2);
         addMenu(new ImageIcon(getClass().getResource("/icon/4.png")), "Analysis", 3);
         addMenu(new ImageIcon(getClass().getResource("/icon/5.png")), "Note", 4);
         addMenu(new ImageIcon(getClass().getResource("/icon/6.png")), "Export", 5);
@@ -40,6 +40,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ImageIcon(getClass().getResource("/icon/8.png")), "Setting", 7);
         addEmpty();
         addMenu(new ImageIcon(getClass().getResource("/icon/logout.png")), "Logout", 8);
+        this.setFocusable(false);
     }
 
     private void addEmpty() {
@@ -49,6 +50,8 @@ public class Menu extends javax.swing.JPanel {
     private void addMenu(Icon icon, String text, int index) {
         ButtonMenu menu = new ButtonMenu();
         menu.setIcon(icon);
+        //menu.setFocusable(false);
+        menu.setFocusPainted(false);
         menu.setText("  " + text);
         pm1.add(menu);
         menu.addActionListener((ActionEvent ae) -> {
@@ -74,13 +77,14 @@ public class Menu extends javax.swing.JPanel {
         sp1 = new javax.swing.JScrollPane();
         pm1 = new javax.swing.JPanel();
         roundPanel1 = new hamroshare.uicomponents.RoundPanel();
-        imageAvatar2 = new hamroshare.uicomponents.ImageAvatar();
         user2 = new javax.swing.JLabel();
         user1 = new javax.swing.JLabel();
         buttonBadges1 = new hamroshare.uicomponents.ButtonBadges();
         buttonBadges2 = new hamroshare.uicomponents.ButtonBadges();
+        avatar2 = new hamroshare.ui.Avatar();
 
         setPreferredSize(new java.awt.Dimension(165, 420));
+        setLayout(null);
 
         rp1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -88,6 +92,9 @@ public class Menu extends javax.swing.JPanel {
         sp1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         pm1.setBackground(new java.awt.Color(51, 51, 51));
+        pm1.setFocusable(false);
+        pm1.setRequestFocusEnabled(false);
+        pm1.setVerifyInputWhenFocusTarget(false);
 
         javax.swing.GroupLayout pm1Layout = new javax.swing.GroupLayout(pm1);
         pm1.setLayout(pm1Layout);
@@ -118,59 +125,50 @@ public class Menu extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
-        roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add(rp1);
+        rp1.setBounds(0, 95, 164, 325);
 
-        imageAvatar2.setForeground(new java.awt.Color(231, 231, 231));
-        imageAvatar2.setBorderSize(2);
-        imageAvatar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
-        roundPanel1.add(imageAvatar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 50, 40));
+        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        roundPanel1.setFocusable(false);
+        roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         user2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         user2.setForeground(new java.awt.Color(224, 224, 224));
+        user2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user2.setText("Username");
-        roundPanel1.add(user2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 100, -1));
+        roundPanel1.add(user2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 69, 160, 20));
 
-        user1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        user1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         user1.setForeground(new java.awt.Color(224, 224, 224));
+        user1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user1.setText("HamroShare App");
-        roundPanel1.add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 159, 20));
+        roundPanel1.add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 160, -1));
 
         buttonBadges1.setBackground(new java.awt.Color(25, 25, 25));
         buttonBadges1.setForeground(new java.awt.Color(9, 129, 233));
         buttonBadges1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/noti.png"))); // NOI18N
         buttonBadges1.setBadges(5);
-        roundPanel1.add(buttonBadges1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 40, 30));
+        buttonBadges1.setFocusable(false);
+        buttonBadges1.setRequestFocusEnabled(false);
+        roundPanel1.add(buttonBadges1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 40, 30));
 
         buttonBadges2.setBackground(new java.awt.Color(25, 25, 25));
         buttonBadges2.setForeground(new java.awt.Color(247, 58, 58));
         buttonBadges2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/message.png"))); // NOI18N
         buttonBadges2.setBadges(15);
-        roundPanel1.add(buttonBadges2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
+        buttonBadges2.setFocusable(false);
+        buttonBadges2.setRequestFocusEnabled(false);
+        roundPanel1.add(buttonBadges2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
+        roundPanel1.add(avatar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 50, 50));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(rp1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rp1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        add(roundPanel1);
+        roundPanel1.setBounds(0, 0, 164, 89);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static hamroshare.ui.Avatar avatar2;
     private hamroshare.uicomponents.ButtonBadges buttonBadges1;
     private hamroshare.uicomponents.ButtonBadges buttonBadges2;
-    public hamroshare.uicomponents.ImageAvatar imageAvatar2;
     private javax.swing.JPanel pm1;
     private hamroshare.uicomponents.RoundPanel roundPanel1;
     private hamroshare.uicomponents.RoundPanel rp1;

@@ -4,17 +4,14 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.gson.Gson;
 import config.RegisteredUser;
 import hamroshare.databases.DBFirebase;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 /**
  *
@@ -44,7 +41,9 @@ public class UserModel {
     public String getUid() {
         return uid;
     }
-
+    public String getStatus(){
+        return "USER";
+    }
     public void setUid(String uid) {
         this.uid = uid;
     }
@@ -152,19 +151,21 @@ public class UserModel {
     public RegisteredUser authUser() throws MalformedURLException, IOException, JSONException, Throwable {
         StringBuilder result = new StringBuilder();
         String urlString = "https://hamroapi.herokuapp.com/login/sijan/" + username + "/" + password;
-        URL url = new URL(urlString);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        for (String line; (line = reader.readLine()) != null;) {
-            result.append(line);
-            String response = result.toString();
-            JSONObject responseObject = new JSONObject(response);
-            Gson gson = new Gson();
-            return gson.fromJson(responseObject.toString(), RegisteredUser.class);
-        }
-        throw new Throwable("Auth error");
+        Document document = Jsoup.connect(urlString).ignoreContentType(true).get();
+//        URL url = new URL(urlString);
+//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//        conn.setRequestMethod("GET");
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//        for (String line; (line = reader.readLine()) != null;) {
+//            result.append(line);
+//            String response = result.toString();
+//            JSONObject responseObject = new JSONObject(response);
+//            Gson gson = new Gson();
+        return new Gson().fromJson(document.text(), RegisteredUser.class);
+//        }
+//        throw new Throwable("Auth error");
     }
+
     void switchValue(UserModel userModel) {
         uid = userModel.getUid();
         name = userModel.getName();

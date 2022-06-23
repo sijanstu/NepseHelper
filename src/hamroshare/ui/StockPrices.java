@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import rojerusan.RSComboBox;
 
 /**
  *
@@ -23,8 +23,8 @@ public class StockPrices {
     public static List<String> companyList = null;
 
     public static double[] getCompanyPrices() throws MalformedURLException, IOException {
-        company=company.replace(".csv", "");
-                company = company.toUpperCase() + ".csv";
+        company = company.replace(".csv", "");
+        company = company.toUpperCase() + ".csv";
         Document page = Jsoup.parse(new URL(LINK + company), 20000);
         Elements rows = page.getElementsByTag("tr");
         rows.remove(0);
@@ -47,11 +47,11 @@ public class StockPrices {
         }
     }
 
-    public static void fetchCompaniesInJComboBox(RSComboBox comboBox) {
+    public static void fetchCompaniesInJComboBox(JComboBox comboBox) {
         StockPrices.comboBox = comboBox;
         new FetchCompaniesInThread().start();
     }
-    static RSComboBox comboBox;
+    static JComboBox comboBox;
 
     static private class FetchCompaniesInThread extends Thread {
 

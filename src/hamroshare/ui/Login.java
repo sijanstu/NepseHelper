@@ -1,5 +1,6 @@
 package hamroshare.ui;
 
+import com.formdev.flatlaf.FlatLaf;
 import com.google.api.client.util.Base64;
 import config.RegisteredUser;
 import hamroshare.Events.UserRegistration;
@@ -10,12 +11,10 @@ import hamroshare.calculations.MinimizeController;
 import hamroshare.dtos.UserModel;
 import hamroshare.eventhandlers.Info;
 import hamroshare.uicomponents.LoginButton;
-import hamroshare.uicomponents.PasswordButton;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -45,6 +44,7 @@ public final class Login extends JFrame {
 
     public Login() {
         initComponents();
+        Rectangle rect = new Rectangle(3, 7, 55, 55);
 
         initLogin();
     }
@@ -57,12 +57,11 @@ public final class Login extends JFrame {
         usern = new RSMaterialComponent.RSTextFieldMaterial();
         passn = new RSMaterialComponent.RSPasswordMaterial();
         lgbtn = new hamroshare.uicomponents.LoginButton();
-        label = new javax.swing.JLabel();
         slSwitchLabel = new javax.swing.JLabel();
         emailID = new RSMaterialComponent.RSTextFieldMaterial();
         fullName = new RSMaterialComponent.RSTextFieldMaterial();
         simage = new rojeru_san.rsbutton.RSButtonRound();
-        simageavater = new hamroshare.uicomponents.ImageAvatar();
+        avatar2 = new hamroshare.ui.Avatar();
         close = new javax.swing.JLabel();
         close1 = new javax.swing.JLabel();
 
@@ -74,7 +73,7 @@ public final class Login extends JFrame {
 
         jp1.setBackground(new java.awt.Color(51, 51, 51));
         jp1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 1, true));
-        jp1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jp1.setLayout(null);
 
         usern.setBackground(new java.awt.Color(51, 51, 51));
         usern.setForeground(new java.awt.Color(255, 255, 255));
@@ -88,7 +87,8 @@ public final class Login extends JFrame {
                 usernActionPerformed(evt);
             }
         });
-        jp1.add(usern, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 170, 40));
+        jp1.add(usern);
+        usern.setBounds(10, 140, 170, 40);
 
         passn.setBackground(new java.awt.Color(51, 51, 51));
         passn.setForeground(new java.awt.Color(255, 255, 255));
@@ -110,15 +110,16 @@ public final class Login extends JFrame {
                 passnActionPerformed(evt);
             }
         });
-        jp1.add(passn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 182, 170, -1));
+        jp1.add(passn);
+        passn.setBounds(10, 182, 170, 42);
 
         lgbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lgbtnMouseClicked(evt);
             }
         });
-        jp1.add(lgbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 230, 170, 42));
-        jp1.add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 15, 150, 120));
+        jp1.add(lgbtn);
+        lgbtn.setBounds(7, 230, 170, 42);
 
         slSwitchLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         slSwitchLabel.setForeground(new java.awt.Color(0, 204, 204));
@@ -130,7 +131,8 @@ public final class Login extends JFrame {
                 slSwitchLabelMouseClicked(evt);
             }
         });
-        jp1.add(slSwitchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 284, 164, -1));
+        jp1.add(slSwitchLabel);
+        slSwitchLabel.setBounds(13, 284, 164, 19);
 
         emailID.setBackground(new java.awt.Color(51, 51, 51));
         emailID.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,7 +146,8 @@ public final class Login extends JFrame {
                 emailIDActionPerformed(evt);
             }
         });
-        jp1.add(emailID, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, 40));
+        jp1.add(emailID);
+        emailID.setBounds(10, 100, 170, 40);
 
         fullName.setBackground(new java.awt.Color(51, 51, 51));
         fullName.setForeground(new java.awt.Color(255, 255, 255));
@@ -158,7 +161,8 @@ public final class Login extends JFrame {
                 fullNameActionPerformed(evt);
             }
         });
-        jp1.add(fullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 170, 40));
+        jp1.add(fullName);
+        fullName.setBounds(10, 60, 170, 40);
 
         simage.setText("Select Image");
         simage.addActionListener(new java.awt.event.ActionListener() {
@@ -166,14 +170,12 @@ public final class Login extends JFrame {
                 simageActionPerformed(evt);
             }
         });
-        jp1.add(simage, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 120, 30));
+        jp1.add(simage);
+        simage.setBounds(60, 20, 120, 30);
+        jp1.add(avatar2);
+        avatar2.setBounds(30, 20, 120, 120);
 
-        simageavater.setForeground(new java.awt.Color(231, 231, 231));
-        simageavater.setBorderSize(2);
-        simageavater.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
-        jp1.add(simageavater, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 60, 50));
-
-        getContentPane().add(jp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 185, 316));
+        getContentPane().add(jp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 185, 310));
 
         close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         close.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -215,11 +217,11 @@ public byte[] extractBytes(String ImageName) throws IOException {
     }//GEN-LAST:event_lgbtnMouseClicked
 
     private void passnFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passnFocusGained
-        PasswordButton passwordButton = new PasswordButton(label, "clicked", "/icon/userpass.png");
+        //PasswordButton passwordButton = new PasswordButton(label, "clicked", "/icon/userpass.png");
     }//GEN-LAST:event_passnFocusGained
 
     private void passnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passnFocusLost
-        PasswordButton passwordButton = new PasswordButton(label, "notclicked", "/icon/user.png");
+        //  PasswordButton passwordButton = new PasswordButton(label, "notclicked", "/icon/user.png");
     }//GEN-LAST:event_passnFocusLost
 
     private void usernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernActionPerformed
@@ -252,12 +254,19 @@ public byte[] extractBytes(String ImageName) throws IOException {
         if (res == JFileChooser.APPROVE_OPTION) {
             File selFile = file.getSelectedFile();
             String path = selFile.getAbsolutePath();
-            ImageIcon imageIcon = new ImageIcon(path);
+            imagePath = path;
+            try {
+                ResizeImage.resize(imagePath, "user.png");
+                imagePath="user.png";
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ImageIcon imageIcon = new ImageIcon("user.png");
             Image image = imageIcon.getImage();
-            Image newimg = image.getScaledInstance(simageavater.getHeight(), simageavater.getWidth(), java.awt.Image.SCALE_SMOOTH);
+            Image newimg = image.getScaledInstance(avatar2.getHeight(), avatar2.getWidth(), java.awt.Image.SCALE_SMOOTH);
             ImageIcon newImageIcon = new ImageIcon(newimg);
-            simageavater.setIcon(newImageIcon);
-            imagePath=path;
+            Avatar.imageAvatar2.setIcon(newImageIcon);
+            FlatLaf.updateUI();
         }
 
     }//GEN-LAST:event_simageActionPerformed
@@ -329,16 +338,15 @@ public byte[] extractBytes(String ImageName) throws IOException {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private hamroshare.ui.Avatar avatar2;
     public javax.swing.JLabel close;
     public javax.swing.JLabel close1;
     public RSMaterialComponent.RSTextFieldMaterial emailID;
     public RSMaterialComponent.RSTextFieldMaterial fullName;
     public hamroshare.uicomponents.RoundPanel jp1;
-    public javax.swing.JLabel label;
     private hamroshare.uicomponents.LoginButton lgbtn;
     public RSMaterialComponent.RSPasswordMaterial passn;
     private rojeru_san.rsbutton.RSButtonRound simage;
-    public hamroshare.uicomponents.ImageAvatar simageavater;
     private javax.swing.JLabel slSwitchLabel;
     public RSMaterialComponent.RSTextFieldMaterial usern;
     // End of variables declaration//GEN-END:variables
@@ -379,6 +387,8 @@ public byte[] extractBytes(String ImageName) throws IOException {
                         RegisteredUser.registeredUser = reguser1;
                         Info.display(jp1, "Success", 0, 2000);
                         Dash.main();
+
+                        Avatar.imageAvatar2.setIcon(RegisteredUser.getProfileIconResized(Avatar.imageAvatar2.getBounds()));
                         dispose();
                     } else {
                         Info.display(jp1, "Not Found", 0, 2000);
@@ -418,18 +428,22 @@ public byte[] extractBytes(String ImageName) throws IOException {
     void isRegistering(Boolean bool) {
         emailID.setVisible(bool);
         fullName.setVisible(bool);
-        label.setVisible(!bool);
         simage.setVisible(bool);
-        simageavater.setVisible(bool);
         isRegistering = bool;
         if (bool) {
+            Rectangle rect = new Rectangle(3, 7, 55, 55);
+            avatar2.setBounds(rect);
             slSwitchLabel.setText("or Login Now");
             lgbtn.value = 1;
             lgbtn.repaint();
             fullName.requestFocus(true);
+
         } else {
+            Rectangle rect = new Rectangle(30, 20, 120, 110);
+            avatar2.setBounds(rect);
             slSwitchLabel.setText("or SignUp Now");
             lgbtn.value = 0;
+
             lgbtn.repaint();
         }
     }
@@ -462,7 +476,7 @@ public byte[] extractBytes(String ImageName) throws IOException {
     }
 
     void setIcon() {
-        new AutoSetIcon().set(label, "/icon/user.png");
+        // new AutoSetIcon().set(label, "/icon/user.png");
     }
 
     void toEdge() {

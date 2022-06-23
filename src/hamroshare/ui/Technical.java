@@ -33,14 +33,8 @@ public class Technical extends javax.swing.JPanel {
         btnGroup.add(per2);
         btnGroup.add(per3);
         btnGroup.add(per4);
-
         lineChart.addLegend("Price", new Color(186, 37, 37), new Color(241, 100, 120));
         lineChart.addLegend("Moving Average", new Color(12, 84, 175), new Color(0, 108, 247));
-        try {
-            prices = StockPrices.getCompanyPrices();
-        } catch (IOException ex) {
-            Logger.getLogger(Technical.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public static void initChart(String company) {
@@ -63,13 +57,13 @@ public class Technical extends javax.swing.JPanel {
         roundPanel2 = new hamroshare.uicomponents.RoundPanel();
         roundPanel1 = new hamroshare.uicomponents.RoundPanel();
         lineChart = new hamroshare.chart.LineChart();
-        companyComboBox = new rojerusan.RSComboBox();
         per1 = new RSMaterialComponent.RSRadioButtonMaterial();
         per2 = new RSMaterialComponent.RSRadioButtonMaterial();
         per3 = new RSMaterialComponent.RSRadioButtonMaterial();
         per4 = new RSMaterialComponent.RSRadioButtonMaterial();
         avragePrice = new javax.swing.JLabel();
         closingPrice = new javax.swing.JLabel();
+        companyComboBox1 = new javax.swing.JComboBox<>();
 
         setOpaque(false);
 
@@ -93,23 +87,6 @@ public class Technical extends javax.swing.JPanel {
         );
 
         roundPanel2.add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 142, 370, 270));
-
-        companyComboBox.setBackground(new java.awt.Color(51, 51, 51));
-        companyComboBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
-        companyComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Companies" }));
-        companyComboBox.setSelectedItem(0);
-        companyComboBox.setColorArrow(new java.awt.Color(51, 51, 51));
-        companyComboBox.setColorBorde(new java.awt.Color(102, 102, 102));
-        companyComboBox.setColorFondo(new java.awt.Color(51, 51, 51));
-        companyComboBox.setColorSeleccion(new java.awt.Color(51, 51, 51));
-        companyComboBox.setConBorde(true);
-        companyComboBox.setOpaque(false);
-        companyComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                companyComboBoxActionPerformed(evt);
-            }
-        });
-        roundPanel2.add(companyComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 130, -1));
 
         per1.setForeground(new java.awt.Color(0, 204, 204));
         per1.setText("15 Day");
@@ -175,6 +152,14 @@ public class Technical extends javax.swing.JPanel {
         closingPrice.setText("Closing price: ");
         roundPanel2.add(closingPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
+        companyComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        companyComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                companyComboBox1ActionPerformed(evt);
+            }
+        });
+        roundPanel2.add(companyComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 130, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -186,21 +171,6 @@ public class Technical extends javax.swing.JPanel {
             .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void companyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyComboBoxActionPerformed
-        if (isfirst < 2) {
-            isfirst++;
-        } else {
-            if ((String) companyComboBox.getSelectedItem() != null) {
-                System.out.println(companyComboBox.getSelectedItem().toString());
-                company = companyComboBox.getSelectedItem().toString() + ".csv";
-                lineChart.clear();
-                lineChart.repaint();
-                new UpdateThisLineChart().start();
-
-            }
-        }
-    }//GEN-LAST:event_companyComboBoxActionPerformed
 
     private void per1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_per1ActionPerformed
         updateChart(15, 30);
@@ -221,6 +191,21 @@ public class Technical extends javax.swing.JPanel {
         updateChart(365, 1000);
         lineChart.blankPlotChart.setMaxValues(getMaxValue(pricesPeriod));
     }//GEN-LAST:event_per4ActionPerformed
+
+    private void companyComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyComboBox1ActionPerformed
+if (isfirst < 2) {
+            isfirst++;
+        } else {
+            if ((String) companyComboBox1.getSelectedItem() != null) {
+                //System.out.println(companyComboBox1.getSelectedItem().toString());
+                company = companyComboBox1.getSelectedItem().toString() + ".csv";
+                lineChart.clear();
+                lineChart.repaint();
+                new UpdateThisLineChart().start();
+
+            }
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_companyComboBox1ActionPerformed
     static int isfirst = 0;
 
     public static double getMaxValue(double[] numbers) {
@@ -252,11 +237,14 @@ public class Technical extends javax.swing.JPanel {
     }
 
     void updateChart(int period, int dataSize) {
+        //lineChart.clear();
+        System.out.println(Arrays.toString(prices));
         if (prices == null) {
             try {
                 company = company.replace(".csv", "");
                 company = company.toUpperCase() + ".csv";
                 prices = StockPrices.getCompanyPrices();
+                
             } catch (IOException ex) {
                 Logger.getLogger(Technical.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -268,13 +256,13 @@ public class Technical extends javax.swing.JPanel {
             int sizediff = dataSize - prices.length;
             System.arraycopy(prices, 0, pricesPeriod, sizediff, prices.length);
         } else {
-            System.arraycopy(prices, prices.length-dataSize, pricesPeriod, 0, dataSize);
-            System.out.println(pricesPeriod[pricesPeriod.length-1]);
-//            for (int i = dataSize - 1; i >= 0; i--) {
-//                if (prices.length > i - 1) {
-//                    pricesPeriod[dataSize - 1 - i] = prices[prices.length - i - 1];
-//                }
-//            }
+            //System.arraycopy(prices, prices.length-dataSize, pricesPeriod, 0, dataSize);
+            //System.out.println(pricesPeriod[pricesPeriod.length-1]);
+            for (int i = dataSize - 1; i >= 0; i--) {
+                if (prices.length > i - 1) {
+                    pricesPeriod[dataSize - 1 - i] = prices[prices.length - i - 1];
+                }
+            }
         }
         List<Double> avgPrices = SimpleMovingAverage.getMovingAverage(pricesPeriod, period);
         createChart(pricesPeriod, avgPrices);
@@ -290,7 +278,7 @@ public class Technical extends javax.swing.JPanel {
                 //lineChart.clear();
                 prices = StockPrices.getCompanyPrices();
                 averages = SimpleMovingAverage.getMovingAverage(prices, 30);
-                per4.doClick();
+                per1.doClick();
                 averagePrice = averages.get(averages.size() - 1);
                 closingPrice.setText("Closing Price: Rs." + prices[prices.length - 1]);
                 avragePrice.setText("Average Price: Rs." + df.format(averagePrice));
@@ -307,7 +295,7 @@ public class Technical extends javax.swing.JPanel {
     public static javax.swing.JLabel avragePrice;
     private javax.swing.ButtonGroup btnGroup;
     public static javax.swing.JLabel closingPrice;
-    public static rojerusan.RSComboBox companyComboBox;
+    public static javax.swing.JComboBox<String> companyComboBox1;
     public static hamroshare.chart.LineChart lineChart;
     public static RSMaterialComponent.RSRadioButtonMaterial per1;
     private RSMaterialComponent.RSRadioButtonMaterial per2;

@@ -37,8 +37,8 @@ public class LiveTable extends javax.swing.JPanel {
         roundPanel1 = new hamroshare.uicomponents.RoundPanel();
         sp1 = new javax.swing.JScrollPane();
         tbl = new rojerusan.RSTableMetro();
-        srchText = new rojeru_san.rsfield.RSTextMaterial();
         date = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setOpaque(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -46,11 +46,11 @@ public class LiveTable extends javax.swing.JPanel {
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        sp1.setBorder(null);
         sp1.setForeground(new java.awt.Color(51, 51, 51));
         sp1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         sp1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         sp1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        sp1.setEnabled(false);
         sp1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 sp1ComponentResized(evt);
@@ -73,20 +73,16 @@ public class LiveTable extends javax.swing.JPanel {
 
         roundPanel1.add(sp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 390, 390));
 
-        srchText.setBackground(new java.awt.Color(51, 51, 51));
-        srchText.setForeground(new java.awt.Color(255, 255, 255));
-        srchText.setColorMaterial(new java.awt.Color(255, 255, 255));
-        srchText.setPlaceholder("Search Company");
-        srchText.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                srchTextCaretUpdate(evt);
-            }
-        });
-        roundPanel1.add(srchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
-
         date.setForeground(new java.awt.Color(255, 255, 255));
         date.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         roundPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 220, 30));
+
+        jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField1CaretUpdate(evt);
+            }
+        });
+        roundPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 2, 390, 30));
 
         add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, -2, 390, 420));
     }// </editor-fold>//GEN-END:initComponents
@@ -95,17 +91,17 @@ public class LiveTable extends javax.swing.JPanel {
         tbl.scrollRectToVisible(tbl.getCellRect(0, 0, true));
     }//GEN-LAST:event_sp1ComponentResized
 
-    private void srchTextCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_srchTextCaretUpdate
-        String key = srchText.getText();
+    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
+        String key = jTextField1.getText();
         SearchDataAlgo.displayToTable(key);
-    }//GEN-LAST:event_srchTextCaretUpdate
+    }//GEN-LAST:event_jTextField1CaretUpdate
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel date;
+    private javax.swing.JTextField jTextField1;
     private hamroshare.uicomponents.RoundPanel roundPanel1;
     private javax.swing.JScrollPane sp1;
-    private rojeru_san.rsfield.RSTextMaterial srchText;
     public static rojerusan.RSTableMetro tbl;
     // End of variables declaration//GEN-END:variables
 }

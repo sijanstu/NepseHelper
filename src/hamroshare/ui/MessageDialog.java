@@ -1,11 +1,14 @@
 package hamroshare.ui;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import hamroshare.uicomponents.Glass;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -89,6 +92,11 @@ public class MessageDialog extends javax.swing.JDialog {
     }
 
     public void closeMessage() {
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            System.err.println("Failed to initialize LaF");
+        }
         startAnimator(false);
     }
 

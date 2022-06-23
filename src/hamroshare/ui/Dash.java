@@ -1,5 +1,7 @@
 package hamroshare.ui;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
 import config.RegisteredUser;
 import dataalgorithms.DashBoardAlgo;
 import dataalgorithms.LiveDataAlgo;
@@ -8,13 +10,20 @@ import hamroshare.calculations.CloseController;
 import hamroshare.calculations.GUIDimension;
 import hamroshare.calculations.MinimizeController;
 import hamroshare.eventhandlers.EventMenu;
+import static hamroshare.ui.Notes.imageAvatar1;
+import static hamroshare.ui.Profile.simageavater;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -26,51 +35,74 @@ public final class Dash extends javax.swing.JFrame {
      * Creates new form Dash
      */
     public Dash() {
-
-        initComponents();
-        menu.imageAvatar2.setIcon(RegisteredUser.getProfileIconResized(menu.imageAvatar2.getBounds()));
-        Menu.user2.setText(RegisteredUser.registeredUser.getUsername());
-        StockPrices.fetchCompaniesInJComboBox(Technical.companyComboBox);
-        LiveDataAlgo.init();
-        DashBoardAlgo.init();
-        new AutoSetIcon().set(close, "/icon/close.png");
-        new AutoSetIcon().set(close1, "/icon/minimize.png");
-        changeMenu(1);
-        changeMenu(0);
-        setDraggable(menu, this.getBounds());
-        EventMenu event;
-        event = (int index) -> {
-            switch (index) {
-                case 0 -> {
-                    changeMenu(0);
-                }
-                case 1 -> {
-                    changeMenu(1);
-                }
-                case 2 -> {
-                    changeMenu(2);
-                }
-                case 3 -> {
-                    changeMenu(3);
-                }
-                case 8 -> {
-                    dispose();
-                    Login.main();
-                }
-                default -> {
-
-                }
+        try {
+            try {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+                
+            } catch (UnsupportedLookAndFeelException ex) {
+                System.err.println("Failed to initialize LaF");
             }
-        };
+            FlatLaf.updateUI();
+            initComponents();
+            simageavater.setIcon(RegisteredUser.getProfileIcon());
+            imageAvatar1.setIcon(RegisteredUser.getProfileIcon());
+            // System.out.println(Byte.valueOf(RegisteredUser.getProfileIcon().getImage().toString()));
+            Avatar.imageAvatar2.setIcon(RegisteredUser.getProfileIcon());
+            //Notes.jLabel2.setIcon(RegisteredUser.getProfileIconResized(jLabel2.getBounds()));
+            //add(Menu.avatar2);
+            //FlatLaf.updateUI();
+            // jLabel1.setIcon(RegisteredUser.getProfileIconResized(jLabel1.getBounds()));
+            //avatar1.repaint();
+            Menu.user2.setText(RegisteredUser.registeredUser.getUsername());
+            StockPrices.fetchCompaniesInJComboBox(Technical.companyComboBox1);
+            LiveDataAlgo.init();
+            DashBoardAlgo.init();
+            new AutoSetIcon().set(close, "/icon/close.png");
+            new AutoSetIcon().set(close1, "/icon/minimize.png");
+            //changeMenu(1);
+            changeMenu(0);
+            setDraggable(menud, this.getBounds());
+            EventMenu event;
+            event = (int index) -> {
+                switch (index) {
+                    case 0 -> {
+                        changeMenu(0);
+                    }
+                    case 1 -> {
+                        changeMenu(1);
+                    }
+                    case 2 -> {
+                        changeMenu(2);
+                    }
+                    case 3 -> {
+                        changeMenu(3);
+                    }
+                    case 4 -> {
+                        changeMenu(4);
+                    }
+                    case 8 -> {
+                        dispose();
+                        Login.main();
+                    }
+                    default -> {
+                            
+                            }
+                }
+            };
+            this.setBackground(new Color(0, 0, 0, 0));
+            menud.setBackground(new Color(5, 5, 5, 5));
+            //jp3.setOpaque(false);
+            //jp3.setBackground (
+            //new Color(0, 0, 0, 0));
+            passmesdialogue();
+            menud.initMenu(event);
+            
 
-        this.setBackground(new Color(0, 0, 0, 0));
-        menu.setBackground(new Color(5, 5, 5, 5));
-        //jp3.setOpaque(false);
-        //jp3.setBackground (
-
-        //new Color(0, 0, 0, 0));
-        passmesdialogue();
-        menu.initMenu(event);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Dash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
 
     }
 
@@ -81,27 +113,38 @@ public final class Dash extends javax.swing.JFrame {
                 dash1.setVisible(false);
                 dash2.setVisible(false);
                 dash3.setVisible(false);
-
+                notes.setVisible(false);
             }
             case 1 -> {
                 dash0.setVisible(false);
                 dash1.setVisible(true);
                 dash2.setVisible(false);
                 dash3.setVisible(false);
+                notes.setVisible(false);
             }
             case 2 -> {
                 dash0.setVisible(false);
                 dash1.setVisible(false);
                 dash2.setVisible(true);
                 dash3.setVisible(false);
+                notes.setVisible(false);
             }
             case 3 -> {
                 dash0.setVisible(false);
                 dash1.setVisible(false);
                 dash2.setVisible(false);
                 dash3.setVisible(true);
+                notes.setVisible(false);
             }
+            case 4 -> {
+                dash0.setVisible(false);
+                dash1.setVisible(false);
+                dash2.setVisible(false);
+                dash3.setVisible(false);
+                notes.setVisible(true);
 
+
+            }
             default ->
                 throw new AssertionError();
         }
@@ -137,13 +180,14 @@ public final class Dash extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menu = new hamroshare.ui.Menu();
+        menud = new hamroshare.ui.Menu();
         dash1 = new hamroshare.ui.LiveTable();
         dash0 = new hamroshare.ui.Home();
         close = new javax.swing.JLabel();
         close1 = new javax.swing.JLabel();
         dash3 = new hamroshare.ui.Technical();
         dash2 = new hamroshare.ui.Profile();
+        notes = new hamroshare.ui.Notes();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -156,7 +200,7 @@ public final class Dash extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 165, 420));
+        getContentPane().add(menud, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, -1, -1));
 
         dash1.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
             public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
@@ -195,6 +239,7 @@ public final class Dash extends javax.swing.JFrame {
         getContentPane().add(close1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 20, 20));
         getContentPane().add(dash3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
         getContentPane().add(dash2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        getContentPane().add(notes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -211,6 +256,7 @@ public final class Dash extends javax.swing.JFrame {
     }//GEN-LAST:event_dash1VetoableChange
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        switchToWindowsTheme();
         CloseController.clicked(this.getBounds());
     }//GEN-LAST:event_closeMouseClicked
 
@@ -233,16 +279,24 @@ public final class Dash extends javax.swing.JFrame {
     private void close1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseExited
         MinimizeController.exitHover(close1);
     }//GEN-LAST:event_close1MouseExited
-
-    public static void main() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    void switchToWindowsTheme() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Dash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main() {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -267,6 +321,7 @@ public final class Dash extends javax.swing.JFrame {
     private hamroshare.ui.LiveTable dash1;
     private hamroshare.ui.Profile dash2;
     private hamroshare.ui.Technical dash3;
-    private hamroshare.ui.Menu menu;
+    private hamroshare.ui.Menu menud;
+    private hamroshare.ui.Notes notes;
     // End of variables declaration//GEN-END:variables
 }

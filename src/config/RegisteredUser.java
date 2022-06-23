@@ -14,6 +14,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -62,12 +64,12 @@ public class RegisteredUser extends UserModel {
         return false;
     }
 
-    public static ImageIcon getProfileIcon() {
-        return new ImageIcon(Base64.decodeBase64(registeredUser.getImage()));
+    public static ImageIcon getProfileIcon() throws MalformedURLException {
+        return new ImageIcon(new URL(registeredUser.getImageUrl()));
     }
 
-    public static ImageIcon getProfileIconResized(Rectangle rect) {
-        return new ImageIcon(new ImageIcon(Base64.decodeBase64(registeredUser.getImage())).getImage().getScaledInstance(rect.height, rect.width, java.awt.Image.SCALE_SMOOTH));
+    public static ImageIcon getProfileIconResized(Rectangle rect) throws MalformedURLException {
+        return new ImageIcon(new ImageIcon(new URL(registeredUser.getImageUrl())).getImage().getScaledInstance(rect.height, rect.width, java.awt.Image.SCALE_SMOOTH));
 
     }
 

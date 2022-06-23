@@ -34,6 +34,7 @@ public class UserRegistration extends Thread {
             String urlPost = "https://hamroapi.herokuapp.com/login/sijan";
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(user);
+            System.out.println(json);
             Document doc = Jsoup.connect(urlPost)
                     .userAgent("Mozilla")
                     .header("content-type", "application/json")

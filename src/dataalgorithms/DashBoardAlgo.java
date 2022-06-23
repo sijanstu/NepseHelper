@@ -63,32 +63,25 @@ public class DashBoardAlgo extends Thread {
             String value = Xsoup.compile("//*[@id=\"banner\"]/div[1]/div[2]").evaluate(page).getElements().text();
             String change = Xsoup.compile("//*[@id=\"banner\"]/div[1]/div[3]").evaluate(page).getElements().text();
             String percentchange = Xsoup.compile("//*[@id=\"banner\"]/div[1]/div[4]").evaluate(page).getElements().text();
-            Home.nepseName.setText(name + ": " + Home.nepseName.getText());
-            Home.value.setText("Nepse Index: " + value);
-            Home.change.setText("Change: " + change);
-            Home.percentage.setText("Change(%): " + percentchange);
+            //Home.nepseName.setText(name + ": " + Home.nepseName.getText());
+            Home.indexNepse.setText(value);
+            Home.changeNepse.setText(change);
+            Home.changePercentageNepse.setText(percentchange);
             System.out.println("complete");
             if (percentage < 30) {
-                Home.nepseName.setText(name + ": " + "Bearish");
-//                Home.value.setForeground(NepseColors.ncolors.getRed());
-                Home.change.setForeground(NepseColors.ncolors.getRed());
-//                Home.nepseName.setForeground(NepseColors.ncolors.getRed());
-                Home.percentage.setForeground(NepseColors.ncolors.getRed());
+                Home.changePercentageNepse.setForeground(NepseColors.ncolors.getRed());
+                Home.changeNepse.setForeground(NepseColors.ncolors.getRed());
+                Home.colorIndex.setBackground(NepseColors.ncolors.getRed());
             } else if (percentage < 60) {
-                Home.nepseName.setText(name + ": " + "Neutral");
-//                Home.value.setForeground(Color.YELLOW);
-                Home.change.setForeground(Color.YELLOW);
-                Home.percentage.setForeground(Color.YELLOW);
-//                Home.nepseName.setForeground(Color.yellow);
+                Home.changePercentageNepse.setForeground(Color.YELLOW);
+                Home.changeNepse.setForeground(Color.YELLOW);
+                Home.colorIndex.setBackground(Color.YELLOW);
             } else {
-                Home.nepseName.setText(name + ": " + "Bullish");
-//                Home.value.setForeground(NepseColors.ncolors.getGreen());
-                Home.change.setForeground(NepseColors.ncolors.getGreen());
-                Home.percentage.setForeground(NepseColors.ncolors.getGreen());
-//                Home.nepseName.setForeground(NepseColors.ncolors.getGreen());
+                Home.changePercentageNepse.setForeground(NepseColors.ncolors.getGreen());
+                Home.changeNepse.setForeground(NepseColors.ncolors.getGreen());
+                Home.colorIndex.setBackground(NepseColors.ncolors.getGreen());
             }
             if (percentage > 85) {
-                Home.nepseName.setText(name + ": " + "Strong Bullish");
             }
         } catch (IOException ex) {
             gaugeChart.setValueWithAnimation(gaugeValue);

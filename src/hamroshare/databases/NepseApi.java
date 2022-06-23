@@ -9,7 +9,6 @@ import com.google.cloud.firestore.WriteResult;
 import hamroshare.dtos.Company;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ import org.jsoup.select.Elements;
 public final class NepseApi {
 
     private static final int TIMEOUT = 10000;
-    private static Document page;
+    private static Document page=null;
     private static Element table;
     private static Elements head, row;
 
@@ -173,6 +172,13 @@ public final class NepseApi {
     }
 
     private static String[] getAllcompany() {
+        if(page==null){
+            try {
+                startPage();
+            } catch (IOException ex) {
+                Logger.getLogger(NepseApi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         String[] data = new String[row.size() - 1];
         for (int i = 1; i < row.size(); i++) {
             data[i - 1] = row.get(i).getElementsByTag("td").get(0).text();
