@@ -26,8 +26,12 @@ class ToasterBody extends JPanel {
         this.c = bgColor;
 
         FontMetrics metrics = getFontMetrics(UIUtils.FONT_GENERAL_UI);
-        int stringWidth = metrics.stringWidth(this.message);
-
+        int stringWidth=0;
+        //try{
+        stringWidth = metrics.stringWidth(this.message);
+       // }catch(Exception ex){
+       //     System.out.println("can't calculate string length");
+        //}
         toastWidth = stringWidth + (TOAST_PADDING * 2);
         heightOfToast = metrics.getHeight() + TOAST_PADDING;
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

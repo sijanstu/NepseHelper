@@ -2,21 +2,25 @@ package hamroshare.ui;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.google.api.client.util.Base64;
-import config.RegisteredUser;
-import hamroshare.Events.UserRegistration;
 import hamroshare.calculations.AutoSetIcon;
 import hamroshare.calculations.CloseController;
 import hamroshare.calculations.GUIDimension;
 import hamroshare.calculations.MinimizeController;
-import hamroshare.dtos.UserModel;
+import hamroshare.dataalgorithms.ImageAlgo;
+import hamroshare.dataalgorithms.MD5;
+import hamroshare.dtos.UserDto;
+import hamroshare.dtos.UserLoginDto;
 import hamroshare.eventhandlers.Info;
+import hamroshare.login.LoginController;
 import hamroshare.uicomponents.LoginButton;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Rectangle;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,12 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import org.json.JSONException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -68,7 +67,7 @@ public final class Login extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HamroShare");
         setAlwaysOnTop(true);
-        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jp1.setBackground(new java.awt.Color(51, 51, 51));
@@ -173,7 +172,7 @@ public final class Login extends JFrame {
         jp1.add(simage);
         simage.setBounds(60, 20, 120, 30);
         jp1.add(avatar2);
-        avatar2.setBounds(30, 20, 120, 120);
+        avatar2.setBounds(30, 20, 120, 89);
 
         getContentPane().add(jp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 185, 310));
 
@@ -257,7 +256,7 @@ public byte[] extractBytes(String ImageName) throws IOException {
             imagePath = path;
             try {
                 ResizeImage.resize(imagePath, "user.png");
-                imagePath="user.png";
+                imagePath = "user.png";
             } catch (IOException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -351,54 +350,60 @@ public byte[] extractBytes(String ImageName) throws IOException {
     public RSMaterialComponent.RSTextFieldMaterial usern;
     // End of variables declaration//GEN-END:variables
    void startLoginCotroller() {
-        UserModel userModel = new UserModel();
+        UserDto userModel = new UserDto();
         userModel.setEmailID(emailID.getText());
-        userModel.setName(fullName.getText());
+        userModel.setFullName(fullName.getText());
         userModel.setUsername(usern.getText());
-        userModel.setPassword(passn.getText());
-        userModel.setImageUrl(userModel.getUsername() + ".txt");
+        userModel.setPassword(MD5.generate(passn.getText()));
         try {
-            userModel.setImage(Base64.encodeBase64String(extractBytes(imagePath)));
+            userModel.setImage(Base64.encodeBase64URLSafeString(ImageAlgo.resize(imagePath, 100, 100)));
         } catch (IOException ex) {
-            userModel.setImage(null);
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         if (isRegistering) {
-            if (userModel.getName().equals("")
+            if (userModel.getFullName().equals("")
                     || userModel.getEmailID().equals("")
                     || userModel.getUsername().equals("")
                     || userModel.getPassword().equals("")) {
                 Info.display(jp1, "Enter Required data", 0, 2000);
             } else {
-                UserRegistration.register(this, userModel);
+                try {
+                    UserDto userDto = LoginController.register(userModel);
+                    if (userDto.getId() != null) {
+                        Info.display(jp1, "Success", 0, 2000);
+                        Dash.main();
+                        Avatar.imageAvatar2.setIcon(LoginController.userIcon);
+                        dispose();
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    // Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } else {
             if (userModel.getUsername().equals("")
                     || userModel.getPassword().equals("")) {
                 Info.display(jp1, "Enter Required data", 0, 2000);
             } else {
-                //new hamroshare.Events.LoginButton().clicked(this);
-                RegisteredUser reguser = new RegisteredUser();
-                reguser.setUsername(usern.getText());
-                reguser.setPassword(passn.getText());
+                UserLoginDto loginDto = new UserLoginDto();
+                loginDto.setUsername(usern.getText());
+                loginDto.setPassword(MD5.generate(passn.getText()));
                 try {
-                    RegisteredUser reguser1 = reguser.authUser();
-                    if (reguser1.getUid() != null) {
-                        RegisteredUser.registeredUser = reguser1;
+                    UserDto userDto = LoginController.login(loginDto);
+                    System.out.println(userDto);
+                    if (userDto.getId() != null) {
                         Info.display(jp1, "Success", 0, 2000);
                         Dash.main();
-
-                        Avatar.imageAvatar2.setIcon(RegisteredUser.getProfileIconResized(Avatar.imageAvatar2.getBounds()));
+                        Avatar.imageAvatar2.setIcon(LoginController.userIcon);
                         dispose();
                     } else {
                         Info.display(jp1, "Not Found", 0, 2000);
                         System.out.println("Not found");
                     }
-
-                } catch (JSONException ex) {
-                    System.out.println("jsonException line 32");
-                } catch (Throwable ex) {
-                    System.out.println(ex);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    //  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -420,7 +425,7 @@ public byte[] extractBytes(String ImageName) throws IOException {
         passn.setForeground(Color.white);
         passn.setPhColor(Color.white);
         passn.setCaretColor(Color.white);
-        setBackground(new Color(0, 0, 0, 0));
+        // setBackground(new Color(0, 0, 0, 0));
         setDraggable(jp1, this.getBounds());
         startBar();
     }
@@ -487,5 +492,4 @@ public byte[] extractBytes(String ImageName) throws IOException {
         //User user=new User();
 
     }
-
 }

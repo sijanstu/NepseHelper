@@ -1,7 +1,7 @@
-package dataalgorithms;
+package hamroshare.dataalgorithms;
 
-import static dataalgorithms.LiveDataAlgo.tbl;
-import hamroshare.dtos.Company;
+import static hamroshare.dataalgorithms.LiveDataAlgo.tbl;
+import hamroshare.dtos.CompanyDto;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -10,19 +10,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SearchDataAlgo {
 
-    public static Company[] companies;
+    public static CompanyDto[] companies;
 
     public static void displayToTable(String key) {
         ((DefaultTableModel) tbl.getModel()).setNumRows(0);
         DefaultTableModel dtm = (DefaultTableModel) tbl.getModel();
         if (key.equals("")) {
-            for (Company company : companies) {
-                dtm.addRow(new Object[]{company.getSymbol(), company.getClosingprice(), company.getChangePrice(), company.getDifference()});
+            for (CompanyDto company : companies) {
+                dtm.addRow(new Object[]{company.getSymbol(), company.getClosingPrice(), company.getChange(), company.getDifference()});
             }
         } else {
-            for (Company company : companies) {
+            for (CompanyDto company : companies) {
                 if (company.getSymbol().toLowerCase().startsWith(key.toLowerCase())) {
-                    dtm.addRow(new Object[]{company.getSymbol(), company.getClosingprice(), company.getChangePrice(), company.getDifference()});
+                    dtm.addRow(new Object[]{company.getSymbol(), company.getClosingPrice(), company.getChange(), company.getDifference()});
                 }
             }
         }

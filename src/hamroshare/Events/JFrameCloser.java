@@ -23,7 +23,7 @@ public class JFrameCloser extends TimerTask {
             con.start();
         }
         isfirst = false;
-        if (CheckConnection.isconnected) {
+        if (CheckConnection.isConnected) {
             System.out.println("opened Login");
             close(j1);
             Login.main();
@@ -35,7 +35,7 @@ public class JFrameCloser extends TimerTask {
         if (isthread) {
             j1 = jframe1;
             timer = new Timer();
-            if (!CheckConnection.isconnected) {
+            if (!CheckConnection.isConnected) {
                 timer.cancel();
                 timer = new Timer();
                 timer.schedule(new JFrameCloser(), 1700, 1000);

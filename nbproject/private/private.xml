@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/databases/NepseApi.java</file>
-            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/databases/CheckConnection.java</file>
-            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/databases/getPerson.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare.dataalgorithms/LiveDataAlgo.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/ui/Login.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare/dtos/Company.java</file>
+            <file>file:/C:/Users/Sijan/Documents/GitHub/NepseHelper/src/hamroshare.config/RegisteredUser.java</file>
         </group>
     </open-files>
 </project-private>

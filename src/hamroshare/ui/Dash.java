@@ -2,14 +2,14 @@ package hamroshare.ui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
-import config.RegisteredUser;
-import dataalgorithms.DashBoardAlgo;
-import dataalgorithms.LiveDataAlgo;
+import hamroshare.dataalgorithms.DashBoardAlgo;
+import hamroshare.dataalgorithms.LiveDataAlgo;
 import hamroshare.calculations.AutoSetIcon;
 import hamroshare.calculations.CloseController;
 import hamroshare.calculations.GUIDimension;
 import hamroshare.calculations.MinimizeController;
 import hamroshare.eventhandlers.EventMenu;
+import hamroshare.login.LoginController;
 import static hamroshare.ui.Notes.imageAvatar1;
 import static hamroshare.ui.Profile.simageavater;
 import java.awt.Color;
@@ -17,9 +17,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -36,71 +33,65 @@ public final class Dash extends javax.swing.JFrame {
      */
     public Dash() {
         try {
-            try {
-                UIManager.setLookAndFeel(new FlatDarkLaf());
-                
-            } catch (UnsupportedLookAndFeelException ex) {
-                System.err.println("Failed to initialize LaF");
-            }
-            FlatLaf.updateUI();
-            initComponents();
-            simageavater.setIcon(RegisteredUser.getProfileIcon());
-            imageAvatar1.setIcon(RegisteredUser.getProfileIcon());
-            // System.out.println(Byte.valueOf(RegisteredUser.getProfileIcon().getImage().toString()));
-            Avatar.imageAvatar2.setIcon(RegisteredUser.getProfileIcon());
-            //Notes.jLabel2.setIcon(RegisteredUser.getProfileIconResized(jLabel2.getBounds()));
-            //add(Menu.avatar2);
-            //FlatLaf.updateUI();
-            // jLabel1.setIcon(RegisteredUser.getProfileIconResized(jLabel1.getBounds()));
-            //avatar1.repaint();
-            Menu.user2.setText(RegisteredUser.registeredUser.getUsername());
-            StockPrices.fetchCompaniesInJComboBox(Technical.companyComboBox1);
-            LiveDataAlgo.init();
-            DashBoardAlgo.init();
-            new AutoSetIcon().set(close, "/icon/close.png");
-            new AutoSetIcon().set(close1, "/icon/minimize.png");
-            //changeMenu(1);
-            changeMenu(0);
-            setDraggable(menud, this.getBounds());
-            EventMenu event;
-            event = (int index) -> {
-                switch (index) {
-                    case 0 -> {
-                        changeMenu(0);
-                    }
-                    case 1 -> {
-                        changeMenu(1);
-                    }
-                    case 2 -> {
-                        changeMenu(2);
-                    }
-                    case 3 -> {
-                        changeMenu(3);
-                    }
-                    case 4 -> {
-                        changeMenu(4);
-                    }
-                    case 8 -> {
-                        dispose();
-                        Login.main();
-                    }
-                    default -> {
-                            
-                            }
-                }
-            };
-            this.setBackground(new Color(0, 0, 0, 0));
-            menud.setBackground(new Color(5, 5, 5, 5));
-            //jp3.setOpaque(false);
-            //jp3.setBackground (
-            //new Color(0, 0, 0, 0));
-            passmesdialogue();
-            menud.initMenu(event);
+            UIManager.setLookAndFeel(new FlatDarkLaf());
             
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Dash.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            System.err.println("Failed to initialize LaF");
         }
+        FlatLaf.updateUI();
+        initComponents();
+        simageavater.setIcon(LoginController.userIcon);
+        imageAvatar1.setIcon(LoginController.userIcon);
+        // System.out.println(Byte.valueOf(RegisteredUser.getProfileIcon().getImage().toString()));
+        Avatar.imageAvatar2.setIcon(LoginController.userIcon);
+        //Notes.jLabel2.setIcon(RegisteredUser.getProfileIconResized(jLabel2.getBounds()));
+        //add(Menu.avatar2);
+        //FlatLaf.updateUI();
+        // jLabel1.setIcon(RegisteredUser.getProfileIconResized(jLabel1.getBounds()));
+        //avatar1.repaint();
+        Menu.user2.setText(LoginController.userDto.getFullName());
+        StockPrices.fetchCompaniesInJComboBox(Technical.companyComboBox1);
+        LiveDataAlgo.init();
+        DashBoardAlgo.init();
+        new AutoSetIcon().set(close, "/icon/close.png");
+        new AutoSetIcon().set(close1, "/icon/minimize.png");
+        //changeMenu(1);
+        changeMenu(0);
+        setDraggable(menud, this.getBounds());
+        EventMenu event;
+        event = (int index) -> {
+            switch (index) {
+                case 0 -> {
+                    changeMenu(0);
+                }
+                case 1 -> {
+                    changeMenu(1);
+                }
+                case 2 -> {
+                    changeMenu(2);
+                }
+                case 3 -> {
+                    changeMenu(3);
+                }
+                case 4 -> {
+                    changeMenu(4);
+                }
+                case 8 -> {
+                    dispose();
+                    Login.main();
+                }
+                default -> {
+                        
+                        }
+            }
+        };
+        this.setBackground(new Color(0, 0, 0, 0));
+        menud.setBackground(new Color(5, 5, 5, 5));
+        //jp3.setOpaque(false);
+        //jp3.setBackground (
+        //new Color(0, 0, 0, 0));
+        passmesdialogue();
+        menud.initMenu(event);
         
         
 
@@ -242,6 +233,7 @@ public final class Dash extends javax.swing.JFrame {
         getContentPane().add(notes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified

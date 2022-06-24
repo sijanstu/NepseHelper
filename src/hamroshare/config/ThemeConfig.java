@@ -1,4 +1,4 @@
-package config;
+package hamroshare.config;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;

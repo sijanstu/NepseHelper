@@ -84,7 +84,7 @@ ScrollBarCustom sb;
         avatar2 = new hamroshare.ui.Avatar();
 
         setPreferredSize(new java.awt.Dimension(165, 420));
-        setLayout(null);
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rp1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -95,18 +95,7 @@ ScrollBarCustom sb;
         pm1.setFocusable(false);
         pm1.setRequestFocusEnabled(false);
         pm1.setVerifyInputWhenFocusTarget(false);
-
-        javax.swing.GroupLayout pm1Layout = new javax.swing.GroupLayout(pm1);
-        pm1.setLayout(pm1Layout);
-        pm1Layout.setHorizontalGroup(
-            pm1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 495, Short.MAX_VALUE)
-        );
-        pm1Layout.setVerticalGroup(
-            pm1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
-        );
-
+        pm1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         sp1.setViewportView(pm1);
 
         javax.swing.GroupLayout rp1Layout = new javax.swing.GroupLayout(rp1);
@@ -125,8 +114,7 @@ ScrollBarCustom sb;
                 .addContainerGap())
         );
 
-        add(rp1);
-        rp1.setBounds(0, 95, 164, 325);
+        add(rp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 95, 164, -1));
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setFocusable(false);
@@ -161,8 +149,7 @@ ScrollBarCustom sb;
         roundPanel1.add(buttonBadges2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
         roundPanel1.add(avatar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 50, 50));
 
-        add(roundPanel1);
-        roundPanel1.setBounds(0, 0, 164, 89);
+        add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 164, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,20 +1,21 @@
-package dataalgorithms;
+package hamroshare.dataalgorithms;
 
-import hamroshare.databases.NepseApi;
-import config.NepseColors;
-import hamroshare.dtos.Company;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hamroshare.config.NepseColors;
+import hamroshare.dtos.CompanyDto;
 import hamroshare.ui.Home;
 import hamroshare.uicomponents.GaugeChart;
-import java.awt.Color;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import us.codecraft.xsoup.Xsoup;
+
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import us.codecraft.xsoup.Xsoup;
 
 /**
  *
@@ -42,12 +43,19 @@ public class DashBoardAlgo extends Thread {
         int gaugeValue = gaugeChart.getValue();
         try {
             gaugeChart.setValueWithAnimation(0);
-            NepseApi nepseApi = new NepseApi();
-            Company[] companies = nepseApi.getAllCompanyDirectly();
+            String url = "https://hamroapi.herokuapp.com/company/list";
+            Document doc = Jsoup.connect(url)
+                .userAgent("Mozilla")
+                .header("content-type", "application/json")
+                .header("accept", "application/json")
+                .ignoreContentType(true).get();
+            String json = doc.text();
+            //map jsonArray to java array
+            CompanyDto[] companies = new ObjectMapper().readValue(json, CompanyDto[].class);
             int positiveCompanies = 0;
             int totalCompanies = companies.length;
-            for (Company company : companies) {
-                if (company.getChangePrice() != null) {
+            for (CompanyDto company : companies) {
+                if (company.getChange()!= null) {
                     if (Float.parseFloat(company.getDifference()) > 0.0) {
                         positiveCompanies++;
                     }

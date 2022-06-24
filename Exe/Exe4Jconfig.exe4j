@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <exe4j version="8.0.1" transformSequenceNumber="3">
-  <directoryPresets config="C:/Program Files/Java" />
+  <directoryPresets hamroshare.config="C:/Program Files/Java" />
   <application name="HamroShare" distributionSourceDir="C:/Users/Sijan Bhandari/Documents/NetBeansProjects/NepseHelper/Exe" />
   <executable name="HamroShare" wrapperType="embed" iconSet="true" iconFile="F:/172150.ico" executableDir="." executableMode="gui" singleInstance="true" />
   <splashScreen show="true" bitmapFile="F:/172150.png" />

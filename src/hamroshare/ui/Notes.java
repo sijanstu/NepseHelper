@@ -4,8 +4,6 @@
  */
 package hamroshare.ui;
 
-import config.RegisteredUser;
-
 /**
  *
  * @author Sijan

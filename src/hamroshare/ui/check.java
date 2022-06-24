@@ -39,7 +39,7 @@ public class check {
 
     public static void initFirebaseSDK() throws IOException {
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/config/servicekey.json");
+            FileInputStream serviceAccount = new FileInputStream("src/hamroshare.config/servicekey.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))

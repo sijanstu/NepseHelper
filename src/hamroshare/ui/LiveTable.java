@@ -1,6 +1,6 @@
 package hamroshare.ui;
 
-import dataalgorithms.SearchDataAlgo;
+import hamroshare.dataalgorithms.SearchDataAlgo;
 import hamroshare.uicomponents.ScrollBarCustom;
 import java.awt.Color;
 import javax.swing.table.DefaultTableCellRenderer;

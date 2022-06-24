@@ -7,7 +7,7 @@ package hamroshare.ui;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import config.RegisteredUser;
+
 import java.awt.Image;
 import java.io.File;
 import java.util.logging.Level;

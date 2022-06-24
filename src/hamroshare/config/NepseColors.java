@@ -1,4 +1,4 @@
-package config;
+package hamroshare.config;
 
 import java.awt.Color;
 import java.io.BufferedReader;

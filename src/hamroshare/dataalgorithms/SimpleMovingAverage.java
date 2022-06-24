@@ -1,4 +1,4 @@
-package dataalgorithms;
+package hamroshare.dataalgorithms;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

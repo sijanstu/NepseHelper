@@ -1,6 +1,6 @@
 package hamroshare.ui;
 
-import dataalgorithms.SimpleMovingAverage;
+import hamroshare.dataalgorithms.SimpleMovingAverage;
 import hamroshare.chart.ModelChart;
 import java.awt.Color;
 import java.io.IOException;
