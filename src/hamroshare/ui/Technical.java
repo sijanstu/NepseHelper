@@ -238,7 +238,7 @@ if (isfirst < 2) {
 
     void updateChart(int period, int dataSize) {
         //lineChart.clear();
-        System.out.println(Arrays.toString(prices));
+        //System.out.println(Arrays.toString(prices));
         if (prices == null) {
             try {
                 company = company.replace(".csv", "");

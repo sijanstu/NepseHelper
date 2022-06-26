@@ -2,11 +2,11 @@ package hamroshare.ui;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.google.api.client.util.Base64;
+import com.google.gson.Gson;
 import hamroshare.calculations.AutoSetIcon;
 import hamroshare.calculations.CloseController;
 import hamroshare.calculations.GUIDimension;
 import hamroshare.calculations.MinimizeController;
-import hamroshare.dataalgorithms.ImageAlgo;
 import hamroshare.dataalgorithms.MD5;
 import hamroshare.dtos.UserDto;
 import hamroshare.dtos.UserLoginDto;
@@ -18,9 +18,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +25,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -77,6 +73,7 @@ public final class Login extends JFrame {
         usern.setBackground(new java.awt.Color(51, 51, 51));
         usern.setForeground(new java.awt.Color(255, 255, 255));
         usern.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        usern.setToolTipText("");
         usern.setColorMaterial(new java.awt.Color(0, 153, 153));
         usern.setOpaque(false);
         usern.setPhColor(new java.awt.Color(255, 255, 255));
@@ -350,62 +347,60 @@ public byte[] extractBytes(String ImageName) throws IOException {
     public RSMaterialComponent.RSTextFieldMaterial usern;
     // End of variables declaration//GEN-END:variables
    void startLoginCotroller() {
-        UserDto userModel = new UserDto();
-        userModel.setEmailID(emailID.getText());
-        userModel.setFullName(fullName.getText());
-        userModel.setUsername(usern.getText());
-        userModel.setPassword(MD5.generate(passn.getText()));
         try {
-            userModel.setImage(Base64.encodeBase64URLSafeString(ImageAlgo.resize(imagePath, 100, 100)));
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if (isRegistering) {
-            if (userModel.getFullName().equals("")
-                    || userModel.getEmailID().equals("")
-                    || userModel.getUsername().equals("")
-                    || userModel.getPassword().equals("")) {
-                Info.display(jp1, "Enter Required data", 0, 2000);
-            } else {
-                try {
+            UserDto userModel = new UserDto();
+            userModel.setEmailID(emailID.getText());
+            userModel.setFullName(fullName.getText());
+            userModel.setUsername(usern.getText());
+            userModel.setPassword(MD5.generate(passn.getText()));
+            userModel.setImage(Base64.encodeBase64URLSafeString(Files.readAllBytes(Paths.get(imagePath))));
+            if (isRegistering) {
+                if (userModel.getFullName().equals("")
+                        || userModel.getEmailID().equals("")
+                        || userModel.getUsername().equals("")
+                        || userModel.getPassword().equals("")) {
+                    Info.display(jp1, "Enter Required data", 0, 2000);
+                } else {
                     UserDto userDto = LoginController.register(userModel);
-                    if (userDto.getId() != null) {
-                        Info.display(jp1, "Success", 0, 2000);
-                        Dash.main();
-                        Avatar.imageAvatar2.setIcon(LoginController.userIcon);
-                        dispose();
-                    }
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                    // Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        } else {
-            if (userModel.getUsername().equals("")
-                    || userModel.getPassword().equals("")) {
-                Info.display(jp1, "Enter Required data", 0, 2000);
-            } else {
-                UserLoginDto loginDto = new UserLoginDto();
-                loginDto.setUsername(usern.getText());
-                loginDto.setPassword(MD5.generate(passn.getText()));
-                try {
-                    UserDto userDto = LoginController.login(loginDto);
                     System.out.println(userDto);
                     if (userDto.getId() != null) {
                         Info.display(jp1, "Success", 0, 2000);
                         Dash.main();
                         Avatar.imageAvatar2.setIcon(LoginController.userIcon);
                         dispose();
-                    } else {
-                        Info.display(jp1, "Not Found", 0, 2000);
-                        System.out.println("Not found");
                     }
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                    //  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                if (userModel.getUsername().equals("")
+                        || userModel.getPassword().equals("")) {
+                    Info.display(jp1, "Enter Required data", 0, 2000);
+                } else {
+                    UserLoginDto userLoginDto = new UserLoginDto();
+                    userLoginDto.setUsername(String.valueOf(usern.getText()));
+                    userLoginDto.setPassword(String.valueOf(MD5.generate(passn.getText())));
+                    try {
+                        UserDto userDto = LoginController.login(userLoginDto);
+                        System.out.println(userDto);
+                        if (userDto.getId() != null) {
+                            Info.display(jp1, "Success", 0, 2000);
+                            Dash.main();
+                            Avatar.imageAvatar2.setIcon(LoginController.userIcon);
+                            dispose();
+                        } else {
+                            Info.display(jp1, "Not Found", 0, 2000);
+                            System.out.println("Not found");
+                        }
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                        Info.display(jp1, "Try Again", 0, 2000);
+                        //  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

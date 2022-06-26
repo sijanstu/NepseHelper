@@ -1,6 +1,5 @@
 package hamroshare.login;
 
-import com.google.api.client.util.Base64;
 import com.google.gson.Gson;
 import hamroshare.dataalgorithms.MD5;
 import hamroshare.dtos.LocalUserDto;
@@ -19,8 +18,10 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import com.google.gson.JsonSyntaxException;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -29,7 +30,7 @@ import javax.swing.ImageIcon;
 public class LoginController {
 
     public static UserDto userDto;
-    public static ImageIcon userIcon;
+    public static ImageIcon userIcon = new ImageIcon("src/hamroshare/images/user.png");
 
     static public UserDto login(UserLoginDto userLoginDto) throws Exception {
         String urlPost = "http://hamroapi.herokuapp.com/auth/login";
@@ -42,26 +43,21 @@ public class LoginController {
     }
 
     static private UserDto postMethod(String url, Object user) throws Exception {
-        try {
             String json = new Gson().toJson(user);
             System.out.println(json);
             Document doc = Jsoup.connect(url)
-                    .userAgent("Mozilla")
-                    .header("content-type", "application/json")
-                    .header("accept", "application/json")
-                    .requestBody(json)
-                    .ignoreContentType(true)
-                    .post();
-            System.out.println(doc.text());
+                .userAgent("Mozilla")
+                .header("content-type", "application/json")
+                .header("accept", "application/json")
+                .requestBody(json)
+                .ignoreContentType(true).post();
+            
+            System.out.println(doc.documentType());
             userDto = new Gson().fromJson(doc.text(), UserDto.class);
-
             setImageIcon(userDto);
             signOutUser();
             storeObject(userDto);
             return userDto;
-        } catch (JsonSyntaxException | IOException ex) {
-            throw new Exception(ex.getMessage());
-        }
     }
 
     static public UserDto getUserWithId(Long id) throws IOException {
@@ -77,21 +73,13 @@ public class LoginController {
     }
 
     static void setImageIcon(UserDto userDto) {
-        Rectangle rectangle = new Rectangle(100, 100);
-        if (userDto.getImage() != null) {
-            ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(userDto.getImage()));
-            try {
-                BufferedImage bImage2 = ImageIO.read(bis);
-                userIcon.setImage(bImage2);
-                System.out.println("From web");
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            userIcon = new ImageIcon(userDto.getImage());
-        } else {
-            userIcon = new ImageIcon("src/hamroshare/images/user.png");
-        }
-        userIcon = new ImageIcon(userIcon.getImage().getScaledInstance(rectangle.height, rectangle.width, java.awt.Image.SCALE_SMOOTH));
+       if(userDto.getImageUrl()!=null){
+           try {
+               userIcon=new ImageIcon(new URL(userDto.getImageUrl()));
+           } catch (MalformedURLException ex) {
+               Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
     }
 
     public static boolean signOutUser() {

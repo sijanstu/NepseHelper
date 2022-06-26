@@ -92,8 +92,18 @@ public class DashBoardAlgo extends Thread {
             if (percentage > 85) {
             }
         } catch (IOException ex) {
-            gaugeChart.setValueWithAnimation(gaugeValue);
-            Logger.getLogger(DashBoardAlgo.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                gaugeChart.setValueWithAnimation(gaugeValue);
+                String url = "https://hamroapi.herokuapp.com/company/refresh";
+                Document doc = Jsoup.connect(url)
+                        .userAgent("Mozilla")
+                        .header("content-type", "application/json")
+                        .header("accept", "application/json")
+                        .ignoreContentType(true).get();
+                Logger.getLogger(DashBoardAlgo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex1) {
+                Logger.getLogger(DashBoardAlgo.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     String URL = "http://www.nepalstock.com/";

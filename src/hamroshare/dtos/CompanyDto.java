@@ -1,10 +1,11 @@
 package hamroshare.dtos;
 
 
+import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class CompanyDto {
+public class CompanyDto implements Serializable{
     private Long id;
     private String symbol;
     private String change;
