@@ -1,5 +1,6 @@
-package hamroshare.ui;
+package hamroapi;
 
+import hamroshare.ui.Technical;
 import static hamroshare.ui.Technical.company;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,7 +39,8 @@ public class StockPrices {
 
     public static void getCompanyList() throws MalformedURLException, IOException {
         if (companyList == null) {
-            Document page = Jsoup.parse(new URL(LINK), 20000);
+            String content = IOUtils.toString(new URL(LINK).openStream());
+            Document page = Jsoup.parse(content);
             Elements rows = page.getElementsByAttributeValue("role", "grid").get(0).getElementsByTag("a");
             rows.remove(0);
             companyList = new ArrayList<>();

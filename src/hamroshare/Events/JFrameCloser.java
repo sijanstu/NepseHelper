@@ -1,8 +1,13 @@
 package hamroshare.eventhandlers;
 
 import hamroshare.databases.CheckConnection;
+import hamroshare.dtos.UserDto;
+import hamroshare.login.LoginController;
 import hamroshare.mainpackage.MainClass;
+import hamroshare.ui.Avatar;
+import hamroshare.ui.Dash;
 import hamroshare.ui.Login;
+import hamroshare.uicomponents.ImageAvatar;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
@@ -26,7 +31,14 @@ public class JFrameCloser extends TimerTask {
         if (CheckConnection.isConnected) {
             System.out.println("opened Login");
             close(j1);
-            Login.main();
+            UserDto user = LoginController.checkLogin();
+            if (user != null) {
+                Dash.main();
+                Avatar.imageAvatar2=new ImageAvatar();
+                       Avatar.imageAvatar2.setIcon(LoginController.userIcon);
+            } else {
+                Login.main();
+            }
             timer.cancel();
         }
     }

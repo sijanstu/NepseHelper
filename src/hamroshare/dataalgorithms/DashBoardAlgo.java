@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -34,7 +33,7 @@ public class DashBoardAlgo extends Thread {
     public static void init() {
         Timer timer = new Timer();
         TimerTask timerTask = new RefreshDash();
-        timer.schedule(timerTask, 0, 10000);
+        timer.schedule(timerTask, 0, 20000);
     }
     public static GaugeChart gaugeChart = Home.gauch;
 
@@ -43,13 +42,14 @@ public class DashBoardAlgo extends Thread {
         int gaugeValue = gaugeChart.getValue();
         try {
             gaugeChart.setValueWithAnimation(0);
-            String url = "https://hamroapi.herokuapp.com/company/list";
-            Document doc = Jsoup.connect(url)
-                .userAgent("Mozilla")
-                .header("content-type", "application/json")
-                .header("accept", "application/json")
-                .ignoreContentType(true).get();
-            String json = doc.text();
+            String url = "https://hamroapi.sijanbhandari.com.np/company/list";
+            String json = IOUtils.toString(new URL(url).openStream());
+            //Document doc = Jsoup.connect(url)
+             //   .userAgent("Mozilla")
+             //   .header("content-type", "application/json")
+             ///   .header("accept", "application/json")
+             //   .ignoreContentType(true).get();
+            //String json = doc.text();
             //map jsonArray to java array
             CompanyDto[] companies = new ObjectMapper().readValue(json, CompanyDto[].class);
             int positiveCompanies = 0;
@@ -92,18 +92,18 @@ public class DashBoardAlgo extends Thread {
             if (percentage > 85) {
             }
         } catch (IOException ex) {
-            try {
+          //  try {
                 gaugeChart.setValueWithAnimation(gaugeValue);
-                String url = "https://hamroapi.herokuapp.com/company/refresh";
-                Document doc = Jsoup.connect(url)
-                        .userAgent("Mozilla")
-                        .header("content-type", "application/json")
-                        .header("accept", "application/json")
-                        .ignoreContentType(true).get();
-                Logger.getLogger(DashBoardAlgo.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex1) {
-                Logger.getLogger(DashBoardAlgo.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+                //String url = "https://hamroapi.sijanbhandari.com.np//company/refresh";
+                //Document doc = Jsoup.connect(url)
+                //        .userAgent("Mozilla")
+                 //       .header("content-type", "application/json")
+                 //       .header("accept", "application/json")
+                 //       .ignoreContentType(true).get();
+               // Logger.getLogger(DashBoardAlgo.class.getName()).log(Level.SEVERE, null, ex);
+            //} catch (IOException ex1) {
+            //    Logger.getLogger(DashBoardAlgo.class.getName()).log(Level.SEVERE, null, ex1);
+           // }
         }
     }
     String URL = "http://www.nepalstock.com/";

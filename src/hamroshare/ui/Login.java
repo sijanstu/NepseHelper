@@ -39,8 +39,6 @@ public final class Login extends JFrame {
 
     public Login() {
         initComponents();
-        Rectangle rect = new Rectangle(3, 7, 55, 55);
-
         initLogin();
     }
 
@@ -347,61 +345,7 @@ public byte[] extractBytes(String ImageName) throws IOException {
     public RSMaterialComponent.RSTextFieldMaterial usern;
     // End of variables declaration//GEN-END:variables
    void startLoginCotroller() {
-        try {
-            UserDto userModel = new UserDto();
-            userModel.setEmailID(emailID.getText());
-            userModel.setFullName(fullName.getText());
-            userModel.setUsername(usern.getText());
-            userModel.setPassword(MD5.generate(passn.getText()));
-            userModel.setImage(Base64.encodeBase64URLSafeString(Files.readAllBytes(Paths.get(imagePath))));
-            if (isRegistering) {
-                if (userModel.getFullName().equals("")
-                        || userModel.getEmailID().equals("")
-                        || userModel.getUsername().equals("")
-                        || userModel.getPassword().equals("")) {
-                    Info.display(jp1, "Enter Required data", 0, 2000);
-                } else {
-                    UserDto userDto = LoginController.register(userModel);
-                    System.out.println(userDto);
-                    if (userDto.getId() != null) {
-                        Info.display(jp1, "Success", 0, 2000);
-                        Dash.main();
-                        Avatar.imageAvatar2.setIcon(LoginController.userIcon);
-                        dispose();
-                    }
-                }
-            } else {
-                if (userModel.getUsername().equals("")
-                        || userModel.getPassword().equals("")) {
-                    Info.display(jp1, "Enter Required data", 0, 2000);
-                } else {
-                    UserLoginDto userLoginDto = new UserLoginDto();
-                    userLoginDto.setUsername(String.valueOf(usern.getText()));
-                    userLoginDto.setPassword(String.valueOf(MD5.generate(passn.getText())));
-                    try {
-                        UserDto userDto = LoginController.login(userLoginDto);
-                        System.out.println(userDto);
-                        if (userDto.getId() != null) {
-                            Info.display(jp1, "Success", 0, 2000);
-                            Dash.main();
-                            Avatar.imageAvatar2.setIcon(LoginController.userIcon);
-                            dispose();
-                        } else {
-                            Info.display(jp1, "Not Found", 0, 2000);
-                            System.out.println("Not found");
-                        }
-                    } catch (Exception ex) {
-                        System.out.println(ex);
-                        Info.display(jp1, "Try Again", 0, 2000);
-                        //  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new LoginNow().start();
     }
 
     void initLogin() {
@@ -486,5 +430,67 @@ public byte[] extractBytes(String ImageName) throws IOException {
     void RegisterUser() {
         //User user=new User();
 
+    }
+    class LoginNow extends Thread{
+        @Override 
+        public void run(){
+             try {
+            UserDto userModel = new UserDto();
+            userModel.setId(null);
+            userModel.setEmailID(emailID.getText());
+            userModel.setFullName(fullName.getText());
+            userModel.setUsername(usern.getText());
+            userModel.setPassword(MD5.generate(passn.getText()));
+            userModel.setImage(Base64.encodeBase64URLSafeString(Files.readAllBytes(Paths.get(imagePath))));
+            if (isRegistering) {
+                if (userModel.getFullName().equals("")
+                        || userModel.getEmailID().equals("")
+                        || userModel.getUsername().equals("")
+                        || userModel.getPassword().equals("")) {
+                    Info.display(jp1, "Enter Required data", 0, 2000);
+                } else {
+                    UserDto userDto = LoginController.register(userModel);
+                    System.out.println(userDto);
+                    if (userDto.getId() != null) {
+                        Info.display(jp1, "Success", 1, 2000);
+                        Dash.main();
+                        Avatar.imageAvatar2.setIcon(LoginController.userIcon);
+                        dispose();
+                    }
+                }
+            } else {
+                if (userModel.getUsername().equals("")
+                        || userModel.getPassword().equals("")) {
+                    Info.display(jp1, "Enter Required data", 0, 2000);
+                } else {
+                    UserLoginDto userLoginDto = new UserLoginDto();
+                    userLoginDto.setUsername(String.valueOf(usern.getText()));
+                    userLoginDto.setPassword(String.valueOf(MD5.generate(passn.getText())));
+                    try {
+                        UserDto userDto = LoginController.login(userLoginDto);
+                        System.out.println(userDto);
+                        if (userDto.getId() != null) {
+                            Info.display(jp1, "Success", 1, 2000);
+                            Dash.main();
+                            Avatar.imageAvatar2.setIcon(LoginController.userIcon);
+                            dispose();
+                        } else {
+                            Info.display(jp1, "Not Found", 0, 2000);
+                            System.out.println("Not found");
+                        }
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                        Info.display(jp1, "Try Again", 0, 2000);
+                        //  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        
     }
 }

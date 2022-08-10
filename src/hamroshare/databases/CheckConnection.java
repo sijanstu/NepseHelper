@@ -2,8 +2,10 @@ package hamroshare.databases;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author Sijan Bhandari
@@ -19,15 +21,16 @@ public class CheckConnection extends Thread {
 
     @Override
     public void run() {
-        String urlString = "https://hamroapi.herokuapp.com/user/test/";
+        String urlString = "https://hamroapi.sijanbhandari.com.np/user/test/";
         try {
-            HttpURLConnection huc = (HttpURLConnection) (new URL(urlString).openConnection());
-            huc.setRequestMethod("HEAD");
-            huc.connect();
-            isConnected = huc.getResponseCode() == 200;
-        } catch (IOException e) {
-            isConnected = false;
-            throw new RuntimeException(e);
+            String value = IOUtils.toString(new URL(urlString).openStream());
+            if(value.equals("true")){
+                isConnected=true;
+            }
+        } catch (MalformedURLException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getCause());
         }
     }
 }

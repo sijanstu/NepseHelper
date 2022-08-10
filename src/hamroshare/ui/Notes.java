@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package hamroshare.ui;
+
+import hamroshare.login.LoginController;
 
 /**
  *
@@ -15,7 +13,10 @@ public class Notes extends javax.swing.JPanel {
      */
     public Notes() {
         initComponents();
-        
+        imageAvatar1.setIcon(LoginController.userIcon);
+        notePanel.setVisible(false);
+        noteList.setViewPanel(notePanel);
+        noteList.RefreshNotes();
     }
 
     /**
@@ -27,41 +28,75 @@ public class Notes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        rSButtonCustom1 = new rojeru_san.rsbutton.RSButtonCustom();
         roundPanel1 = new hamroshare.uicomponents.RoundPanel();
+        notePanel = new hamroshare.ui.notes.ViewNote();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        noteList = new hamroshare.ui.notes.NoteList();
+        rSButtonIconUno2 = new RSMaterialComponent.RSButtonIconUno();
+        rSButtonIconUno1 = new RSMaterialComponent.RSButtonIconUno();
         imageAvatar1 = new hamroshare.uicomponents.ImageAvatar();
         jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+
+        rSButtonCustom1.setText("rSButtonCustom1");
 
         setOpaque(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        roundPanel1.add(notePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 290, 360));
+
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setViewportView(noteList);
+
+        roundPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 330, 300));
+
+        rSButtonIconUno2.setBackground(new java.awt.Color(51, 51, 51));
+        rSButtonIconUno2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_BOX);
+        roundPanel1.add(rSButtonIconUno2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 50, 40));
+
+        rSButtonIconUno1.setBackground(new java.awt.Color(51, 51, 51));
+        rSButtonIconUno1.setBackgroundHover(new java.awt.Color(51, 51, 51));
+        rSButtonIconUno1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
+        roundPanel1.add(rSButtonIconUno1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 40, 40));
 
         imageAvatar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
-        roundPanel1.add(imageAvatar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 300, 50));
+        roundPanel1.add(imageAvatar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Notes                                        Hamro Share");
-        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 30));
-        roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 130, 10));
-        roundPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 300, 10));
-        roundPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 130, 10));
+        jLabel1.setText("Notes                                Hamro Share");
+        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 30));
+        roundPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 330, 10));
+        roundPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 300, 10));
 
-        add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 420));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Your Notes");
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 65, 330, 40));
+
+        add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 420));
     }// </editor-fold>//GEN-END:initComponents
     String imagePath;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static hamroshare.uicomponents.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private hamroshare.ui.notes.NoteList noteList;
+    private hamroshare.ui.notes.ViewNote notePanel;
+    private rojeru_san.rsbutton.RSButtonCustom rSButtonCustom1;
+    private RSMaterialComponent.RSButtonIconUno rSButtonIconUno1;
+    private RSMaterialComponent.RSButtonIconUno rSButtonIconUno2;
     private hamroshare.uicomponents.RoundPanel roundPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,10 +2,10 @@ package hamroshare.login;
 
 import com.google.gson.Gson;
 import hamroshare.dataalgorithms.MD5;
-import hamroshare.dtos.LocalUserDto;
 import hamroshare.dtos.UserDto;
 import hamroshare.dtos.UserLoginDto;
-import java.awt.Rectangle;
+import hamroshare.ui.Avatar;
+import hamroshare.uicomponents.ImageAvatar;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,15 +17,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.google.gson.JsonSyntaxException;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import org.apache.commons.io.IOUtils;
 
 public class LoginController {
 
@@ -33,12 +30,12 @@ public class LoginController {
     public static ImageIcon userIcon = new ImageIcon("src/hamroshare/images/user.png");
 
     static public UserDto login(UserLoginDto userLoginDto) throws Exception {
-        String urlPost = "http://hamroapi.herokuapp.com/auth/login";
+        String urlPost = "https://hamroapi.sijanbhandari.com.np/auth/login";
         return postMethod(urlPost, userLoginDto);
     }
 
     static public UserDto register(UserDto userDto) throws Exception {
-        String urlPost = "http://hamroapi.herokuapp.com/user";
+        String urlPost = "https://hamroapi.sijanbhandari.com.np/user";
         return postMethod(urlPost, userDto);
     }
 
@@ -61,21 +58,20 @@ public class LoginController {
     }
 
     static public UserDto getUserWithId(Long id) throws IOException {
-        String url = "http://hamroapi.herokuapp.com/user/" + id;
-        Document doc = Jsoup.connect(url)
-                .userAgent("Mozilla")
-                .header("content-type", "application/json")
-                .header("accept", "application/json")
-                .ignoreContentType(true).get();
-        userDto = new Gson().fromJson(doc.text(), UserDto.class);
+        String url = "https://hamroapi.sijanbhandari.com.np/user/" + id;
+        System.out.println(id);
+       // Document doc = Jsoup.parse();
+        userDto = new Gson().fromJson(IOUtils.toString(new URL(url).openStream()), UserDto.class);
         setImageIcon(userDto);
         return userDto;
     }
 
-    static void setImageIcon(UserDto userDto) {
+   public static void setImageIcon(UserDto userDto) {
        if(userDto.getImageUrl()!=null){
            try {
                userIcon=new ImageIcon(new URL(userDto.getImageUrl()));
+               Avatar.imageAvatar2=new ImageAvatar();
+                       Avatar.imageAvatar2.setIcon(LoginController.userIcon);
            } catch (MalformedURLException ex) {
                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
            }
@@ -92,10 +88,14 @@ public class LoginController {
 
     public static UserDto checkLogin() {
         try {
-            LocalUserDto localUserDto = readObject();
+            UserDto localUserDto = readObject();
             if (localUserDto.getMID().equals(getMachineID())) {
                 if (localUserDto.getId() != null) {
-                    return getUserWithId(localUserDto.getId());
+                    //userDto=getUserWithId(localUserDto.getId());
+                    System.out.println(localUserDto.getImageUrl());
+                   userDto=localUserDto;
+                   setImageIcon(userDto);
+                   return userDto;
                 }
             }
         } catch (ClassNotFoundException | IOException ex) {
@@ -108,17 +108,15 @@ public class LoginController {
     public static boolean storeObject(UserDto user) throws IOException {
         FileOutputStream fos = new FileOutputStream("user.dat");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        LocalUserDto localUserDto = new LocalUserDto();
-        localUserDto.setId(user.getId());
-        localUserDto.setMID(getMachineID());
-        oos.writeObject(localUserDto);
+        user.setMID(getMachineID());
+        oos.writeObject(user);
         return false;
     }
 
-    public static LocalUserDto readObject() throws ClassNotFoundException, FileNotFoundException, IOException {
+    public static UserDto readObject() throws ClassNotFoundException, FileNotFoundException, IOException {
         FileInputStream fis = new FileInputStream("user.dat");
         ObjectInputStream oos = new ObjectInputStream(fis);
-        return (LocalUserDto) oos.readObject();
+        return (UserDto) oos.readObject();
     }
 
     private static String getMachineID() throws IOException {

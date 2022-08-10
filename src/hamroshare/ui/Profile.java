@@ -1,36 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package hamroshare.ui;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-
-import java.awt.Image;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import hamroshare.dtos.Portfolio;
+import hamroshare.dtos.StockPortfolioDto;
+import hamroshare.uicomponents.Toaster;
+import java.awt.Color;
+import java.awt.Component;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.apache.commons.io.IOUtils;
+import rojeru_san.efectos.ValoresEnum;
+import us.codecraft.xsoup.Xsoup;
 
 /**
  *
  * @author Sijan
  */
-public class Profile extends javax.swing.JPanel {
+public final class Profile extends javax.swing.JPanel {
 
     /**
      * Creates new form Profile
      */
+    public static Profile profile;
+
     public Profile() {
         initComponents();
-        
+        addtrans.setVisible(false);
+        addtrans.setProfile(this);
+        profile = this;
+        refreshData();
         //simageavater.setIcon(RegisteredUser.getProfileIconResized(new Rectangle(140, 150)));
+    }
+
+    public void refreshData() {
+        new RefreshPortfolio().start();
     }
 
     /**
@@ -43,116 +46,304 @@ public class Profile extends javax.swing.JPanel {
     private void initComponents() {
 
         roundPanel1 = new hamroshare.uicomponents.RoundPanel();
-        simageavater = new hamroshare.uicomponents.ImageAvatar();
-        simage = new rojeru_san.rsbutton.RSButtonRound();
+        rSButtonIconDos1 = new RSMaterialComponent.RSButtonIconDos();
+        rSButtonIconDos2 = new RSMaterialComponent.RSButtonIconDos();
         jLabel2 = new javax.swing.JLabel();
+        simageavater = new hamroshare.uicomponents.ImageAvatar();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        addtrans = new hamroshare.ui.AddTransaction();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtab = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        overallgainloss = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        portfoliovalue = new javax.swing.JLabel();
+        todaygainloss = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        overarrow = new RSMaterialComponent.RSButtonIconUno();
+        jSeparator5 = new javax.swing.JSeparator();
+        todayarrow = new RSMaterialComponent.RSButtonIconUno();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        turnoverText = new javax.swing.JLabel();
+        turnoverValue = new javax.swing.JLabel();
+        volumValue = new javax.swing.JLabel();
+        volumeText = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(51, 51, 51));
         setOpaque(false);
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rSButtonIconDos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
+        rSButtonIconDos1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
+        rSButtonIconDos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconDos1ActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(rSButtonIconDos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, -1));
+
+        rSButtonIconDos2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
+        rSButtonIconDos2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        rSButtonIconDos2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconDos2ActionPerformed(evt);
+            }
+        });
+        roundPanel1.add(rSButtonIconDos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Your Portfolio");
+        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 400, 40));
 
         simageavater.setForeground(new java.awt.Color(231, 231, 231));
         simageavater.setBorderSize(2);
         simageavater.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
 
-        simage.setText("Change Picture");
-        simage.setFocusPainted(false);
-        simage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                simageActionPerformed(evt);
-            }
-        });
-        simageavater.add(simage);
-        simage.setBounds(0, 120, 140, 30);
-
-        roundPanel1.add(simageavater, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 140, 150));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Theme :");
-        roundPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 150, 40));
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Profile                                        Hamro Share");
-        roundPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 30));
-        roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 100, 10));
-        roundPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 300, 10));
-        roundPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 100, 10));
+        jLabel1.setText("Profile                                                       Hamro Share");
+        simageavater.add(jLabel1);
+        jLabel1.setBounds(0, -10, 400, 30);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        roundPanel1.add(simageavater, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 400, 80));
+        roundPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 150, 10));
+        roundPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 400, 10));
+        roundPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 400, 10));
+        roundPanel1.add(addtrans, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 380, 310));
+
+        jScrollPane1.setBackground(new java.awt.Color(51, 51, 51));
+
+        jtab.setBackground(new java.awt.Color(51, 51, 51));
+        jtab.setAutoscrolls(true);
+        jtab.setDoubleBuffered(true);
+        jtab.setOpaque(true);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Sijan Bhandari");
-        roundPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, 40));
+        jLabel3.setText("OVERALL PROFIT");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 140, 20));
 
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setText("Dark Theme");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        roundPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 140, 40));
+        overallgainloss.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        overallgainloss.setForeground(new java.awt.Color(255, 255, 0));
+        overallgainloss.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        overallgainloss.setText("NPR 21,34,344");
+        jPanel1.add(overallgainloss, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 140, 30));
 
-        add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 420));
+        jLabel5.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("PORTFOLIO VALUE");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 340, 20));
+
+        jLabel6.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("TODAY'S GAIN/LOSS");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 130, 20));
+
+        portfoliovalue.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        portfoliovalue.setForeground(new java.awt.Color(255, 255, 255));
+        portfoliovalue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        portfoliovalue.setText("NPR 21,34,344");
+        jPanel1.add(portfoliovalue, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 340, 40));
+
+        todaygainloss.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        todaygainloss.setForeground(new java.awt.Color(0, 255, 0));
+        todaygainloss.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        todaygainloss.setText("NPR 21,34,344");
+        jPanel1.add(todaygainloss, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 130, 30));
+
+        jSeparator4.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 180, 60));
+
+        overarrow.setBackground(new java.awt.Color(51, 51, 51));
+        overarrow.setForeground(new java.awt.Color(0, 255, 0));
+        overarrow.setForegroundText(new java.awt.Color(255, 51, 0));
+        overarrow.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_DROP_DOWN);
+        jPanel1.add(overarrow, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 30, 40));
+
+        jSeparator5.setForeground(new java.awt.Color(0, 0, 153));
+        jSeparator5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        jSeparator5.setPreferredSize(new java.awt.Dimension(0, 5));
+        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 320, 60));
+
+        todayarrow.setBackground(new java.awt.Color(51, 51, 51));
+        todayarrow.setForeground(new java.awt.Color(0, 255, 0));
+        todayarrow.setForegroundText(new java.awt.Color(51, 255, 0));
+        todayarrow.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ARROW_DROP_UP);
+        jPanel1.add(todayarrow, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 20, 40));
+
+        jSeparator7.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 180, 60));
+
+        jSeparator6.setForeground(new java.awt.Color(0, 0, 153));
+        jSeparator6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        jSeparator6.setPreferredSize(new java.awt.Dimension(0, 5));
+        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 320, 60));
+
+        turnoverText.setForeground(new java.awt.Color(153, 153, 153));
+        turnoverText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        turnoverText.setText("MARKET TURNOVER");
+        jPanel1.add(turnoverText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 150, 20));
+
+        turnoverValue.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        turnoverValue.setForeground(new java.awt.Color(0, 204, 204));
+        turnoverValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        turnoverValue.setText("NPR 21,34,344");
+        jPanel1.add(turnoverValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 150, 30));
+
+        volumValue.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        volumValue.setForeground(new java.awt.Color(0, 204, 204));
+        volumValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        volumValue.setText("NPR 21,34,344");
+        jPanel1.add(volumValue, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 150, 30));
+
+        volumeText.setForeground(new java.awt.Color(153, 153, 153));
+        volumeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        volumeText.setText("MARKET VOLUME");
+        jPanel1.add(volumeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 160, 20));
+
+        jtab.addTab("Total", jPanel1);
+
+        jScrollPane1.setViewportView(jtab);
+
+        roundPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 400, 330));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void simageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simageActionPerformed
-        JFileChooser file = new JFileChooser();
-        file.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "png");
-        file.addChoosableFileFilter(filter);
-        int res = file.showSaveDialog(null);
-        if (res == JFileChooser.APPROVE_OPTION) {
-            File selFile = file.getSelectedFile();
-            String path = selFile.getAbsolutePath();
-            ImageIcon imageIcon = new ImageIcon(path);
-            Image image = imageIcon.getImage();
-            Image newimg = image.getScaledInstance(simageavater.getHeight(), simageavater.getWidth(), java.awt.Image.SCALE_SMOOTH);
-            
-            
-            ImageIcon newImageIcon = new ImageIcon(newimg);
-            simageavater.setIcon(newImageIcon);
-            imagePath = path;
-        }
-    }//GEN-LAST:event_simageActionPerformed
+    private void rSButtonIconDos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconDos2ActionPerformed
+        if (addtrans.isVisible()) {
+            addtrans.setVisible(false);
+            jtab.setVisible(true);
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        try {
-            if (jRadioButton1.isSelected()) {
-                UIManager.setLookAndFeel(new FlatDarkLaf());
-            } else {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            }
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            addtrans.setVisible(true);
+            jtab.setVisible(false);
         }
-        FlatLaf.updateUI();
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    }//GEN-LAST:event_rSButtonIconDos2ActionPerformed
+
+    private void rSButtonIconDos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconDos1ActionPerformed
+        refreshData();
+    }//GEN-LAST:event_rSButtonIconDos1ActionPerformed
     String imagePath;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private hamroshare.ui.AddTransaction addtrans;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    public static javax.swing.JTabbedPane jtab;
+    private javax.swing.JLabel overallgainloss;
+    private RSMaterialComponent.RSButtonIconUno overarrow;
+    private javax.swing.JLabel portfoliovalue;
+    private RSMaterialComponent.RSButtonIconDos rSButtonIconDos1;
+    private RSMaterialComponent.RSButtonIconDos rSButtonIconDos2;
     private hamroshare.uicomponents.RoundPanel roundPanel1;
-    private rojeru_san.rsbutton.RSButtonRound simage;
     public static hamroshare.uicomponents.ImageAvatar simageavater;
+    private RSMaterialComponent.RSButtonIconUno todayarrow;
+    private javax.swing.JLabel todaygainloss;
+    private javax.swing.JLabel turnoverText;
+    private javax.swing.JLabel turnoverValue;
+    private javax.swing.JLabel volumValue;
+    private javax.swing.JLabel volumeText;
     // End of variables declaration//GEN-END:variables
+class RefreshPortfolio extends Thread {
+
+        @Override
+        public void run() {
+            int i = 0;
+
+            try {
+                Portfolio portfolio = Portfolio.getPortfolio();
+                portfoliovalue.setText("NPR " + Math.round(Double.parseDouble(portfolio.getTotal())));
+                todaygainloss.setText("NPR " + Math.round(Double.parseDouble(portfolio.getTodayGainOrLoss())));
+                overallgainloss.setText("NPR " + Math.round(Double.parseDouble(portfolio.getOverallGainOrLoss())));
+                if (Double.parseDouble(portfolio.getOverallGainOrLoss()) < 0) {
+                    overallgainloss.setForeground(new Color(255, 0, 51));
+                    overarrow.setForegroundText(new Color(255, 0, 51));
+                    overarrow.setIcons(ValoresEnum.ICONS.ARROW_DROP_DOWN);
+                } else if (Double.parseDouble(portfolio.getOverallGainOrLoss()) > 0) {
+                    overallgainloss.setForeground(new Color(0, 255, 0));
+                    overarrow.setForegroundText(new Color(0, 255, 0));
+                    overarrow.setIcons(ValoresEnum.ICONS.ARROW_DROP_UP);
+                } else {
+                    overallgainloss.setForeground(new Color(255, 255, 0));
+                    overarrow.setForegroundText(new Color(255, 255, 0));
+                    overarrow.setIcons(ValoresEnum.ICONS.PLAY_ARROW);
+                }
+                if (Double.parseDouble(portfolio.getTodayGainOrLoss()) < 0) {
+                    todaygainloss.setForeground(new Color(255, 0, 51));
+                    todayarrow.setForegroundText(new Color(255, 0, 51));
+                    todayarrow.setIcons(ValoresEnum.ICONS.ARROW_DROP_DOWN);
+                } else if ((Double.parseDouble(portfolio.getTodayGainOrLoss()) > 0)) {
+                    todaygainloss.setForeground(new Color(0, 255, 0));
+                    todayarrow.setForegroundText(new Color(0, 255, 0));
+                    todayarrow.setIcons(ValoresEnum.ICONS.ARROW_DROP_UP);
+                } else {
+                    todaygainloss.setForeground(new Color(255, 255, 0));
+                    todayarrow.setForegroundText(new Color(255, 255, 0));
+                    todayarrow.setIcons(ValoresEnum.ICONS.PLAY_ARROW);
+                }
+                for (Component comp : jtab.getComponents()) {
+                    if (i > 0 && i < jtab.getComponentCount()) {
+                        jtab.remove(comp);
+                    } else {
+                        i++;
+                    }
+                }
+                for (StockPortfolioDto port : portfolio.getStocks()) {
+                    jtab.add(new StockPortfolio(port), port.getName());
+                }
+                String json1 = IOUtils.toString(new URL("http://www.nepalstock.com/").openStream());
+                String turnover = Xsoup.select(json1, "//*[@id=\"market-watch\"]/div[2]/table/tbody/tr[1]/td[2]").getElements().text();
+                String volume = Xsoup.select(json1, "//*[@id=\"market-watch\"]/div[2]/table/tbody/tr[2]/td[2]").getElements().text();
+                turnoverValue.setText("NPR " + turnover);//+totalTradedValue.substring(0, 3)+" Arba");
+                volumValue.setText(volume);
+            } catch (MalformedURLException ex) {
+                System.out.println(ex);
+                Toaster toaster = new Toaster(roundPanel1);
+                toaster.error("bad url");
+            } catch (IOException ex) {
+                Toaster toaster = new Toaster(roundPanel1);
+                toaster.error("server error right now");
+                System.out.println(ex);
+            }
+        }
+    }
 }

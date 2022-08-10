@@ -1,16 +1,22 @@
 package hamroshare.mainpackage;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import hamroshare.calculations.CloseController;
 import hamroshare.databases.CheckConnection;
 import hamroshare.calculations.GUIDimension;
 import hamroshare.eventhandlers.JFrameCloser;
 import hamroshare.ui.MessageDialog;
+import hamroshare.ui.Settings;
 import java.awt.Color;
 import java.awt.Image;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -133,6 +139,7 @@ public final class MainClass extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
      public static void main(String args[]) {
+         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {

@@ -18,4 +18,5 @@ public class UserDto implements Serializable{
     private String emailID;
     private String image;
     private String imageUrl;
+    private String MID;
 }

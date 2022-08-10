@@ -62,7 +62,9 @@ ScrollBarCustom sb;
 
     private void setSelected(ButtonMenu menu) {
         for (Component com : pm1.getComponents()) {
-            if (com instanceof ButtonMenu b) {
+            //System.out.println(com.getClass().getName());
+            if (com.getClass().getTypeName().equals("hamroshare.uicomponents.ButtonMenu")) {
+                ButtonMenu b = (ButtonMenu) com;
                 b.setSelected(false);
             }
         }
@@ -73,6 +75,8 @@ ScrollBarCustom sb;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        animacion1 = new Animacion.Animacion();
+        averageOperator1 = new com.gg.calculation.model.operators.AverageOperator();
         rp1 = new hamroshare.uicomponents.RoundPanel();
         sp1 = new javax.swing.JScrollPane();
         pm1 = new javax.swing.JPanel();
@@ -124,7 +128,7 @@ ScrollBarCustom sb;
         user2.setForeground(new java.awt.Color(224, 224, 224));
         user2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user2.setText("Username");
-        roundPanel1.add(user2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 69, 160, 20));
+        roundPanel1.add(user2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 59, 160, 30));
 
         user1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         user1.setForeground(new java.awt.Color(224, 224, 224));
@@ -147,13 +151,15 @@ ScrollBarCustom sb;
         buttonBadges2.setFocusable(false);
         buttonBadges2.setRequestFocusEnabled(false);
         roundPanel1.add(buttonBadges2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
-        roundPanel1.add(avatar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 50, 50));
+        roundPanel1.add(avatar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 90, 40));
 
-        add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 164, -1));
+        add(roundPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 164, 90));
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Animacion.Animacion animacion1;
     public static hamroshare.ui.Avatar avatar2;
+    private com.gg.calculation.model.operators.AverageOperator averageOperator1;
     private hamroshare.uicomponents.ButtonBadges buttonBadges1;
     private hamroshare.uicomponents.ButtonBadges buttonBadges2;
     private javax.swing.JPanel pm1;

@@ -3,8 +3,6 @@ package hamroshare.dataalgorithms;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hamroshare.config.NepseColors;
 import hamroshare.ui.LiveTable;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -18,6 +16,8 @@ import java.util.logging.Logger;
 
 import static hamroshare.dataalgorithms.SearchDataAlgo.companies;
 import hamroshare.dtos.CompanyDto;
+import java.net.URL;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -38,7 +38,7 @@ public class LiveDataAlgo extends Thread {
     public static void init() {
         Timer timer = new Timer();
         TimerTask timerTask = new RefreshTable();
-        timer.schedule(timerTask, 0, 10000);
+        timer.schedule(timerTask, 0, 20000);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class LiveDataAlgo extends Thread {
             companies = getData();
             for (CompanyDto company : companies) {
                 DefaultTableModel dtm = (DefaultTableModel) tbl.getModel();
-                dtm.addRow(new Object[]{company.getSymbol(), company.getTransaction(), company.getChange(), company.getDifference()});
+                dtm.addRow(new Object[]{company.getSymbol(), company.getClosingPrice(), company.getChange(), company.getDifference()});
             }
             changeTable(tbl, 3);
             changeTable(tbl, 2);
@@ -85,14 +85,8 @@ public class LiveDataAlgo extends Thread {
     }
 static String updateDate="";
     static CompanyDto[] getData() throws IOException {
-        String url = "https://hamroapi.herokuapp.com/company/refresh";
-        Document doc = Jsoup.connect(url)
-                .userAgent("Mozilla")
-                .header("content-type", "application/json")
-                .header("accept", "application/json")
-                .ignoreContentType(true).get();
-        String json = doc.text();
-        //map jsonArray to java array
+        String url = "https://hamroapi.sijanbhandari.com.np/company/list";
+        String json = IOUtils.toString(new URL(url).openStream());
         return new ObjectMapper().readValue(json, CompanyDto[].class);
     }
 }

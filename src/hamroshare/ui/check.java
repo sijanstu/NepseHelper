@@ -1,19 +1,7 @@
 package hamroshare.ui;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Blob;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.cloud.StorageClient;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,56 +12,61 @@ public class check {
     static FirebaseApp firebaseApp;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        File file = new File("user.png");
-        initFirebaseSDK();
-        StorageClient storageClient = StorageClient.getInstance(firebaseApp);
-        InputStream testFile = new FileInputStream("user.png");
-        String blobString = "Vaadin/" + "user.png";
-        Blob blob = storageClient.bucket().create(blobString, testFile);
-        System.out.println(blob.getName());
-        Blob blob1 = storageClient.bucket().get(blob.getName());
-        byte[] newbyte = blob1.getContent();
-        System.out.println(blob.signUrl(999999,TimeUnit.DAYS));
-
+        System.out.println(calculatTax(true, 790, 5000, 5500));
     }
 
-    public static void initFirebaseSDK() throws IOException {
-        try {
-            FileInputStream serviceAccount = new FileInputStream("src/hamroshare.config/servicekey.json");
-
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("jmav-2bc1e.appspot.com").setStorageBucket("jmav-2bc1e.appspot.com")
-                    .build();
-
-            firebaseApp = FirebaseApp.initializeApp(options);
-            FirebaseAuth.getInstance(firebaseApp);
-
-        } catch (Exception exc) {
-            System.out.println("Firebase exception " + exc);
-
+    static double calculatTax(boolean isSelling, int shares, double purchasePrice, double sellPrice) {
+        double brokerFee;
+        double sebonFee;
+        double dematFee;
+        double total;
+        double tax = 0;
+        double totalGain = shares * purchasePrice;
+        if (isSelling) {
+            totalGain = shares * sellPrice;
         }
-    }
+        //broker fee calculation
+        if (totalGain < 2500) {
+            brokerFee = 10;
+        } else if (totalGain <= 50000) {
+            brokerFee = totalGain * (0.4 / 100);
+        } else if (totalGain <= 500000) {
+            brokerFee = totalGain * (0.37 / 100);
+        } else if (totalGain <= 2000000) {
+            brokerFee = totalGain * (0.34 / 100);
+        } else if (totalGain <= 10000000) {
+            brokerFee = totalGain * (0.3 / 100);
+        } else {
+            brokerFee = totalGain * (0.27 / 100);
+        }
+        //sebon fee
+        sebonFee = totalGain * (0.015 / 100);
 
-    static byte[] getByteFromFile(File file) {
-        FileInputStream fl = null;
-        try {
-            fl = new FileInputStream(file);
-            byte[] arr = new byte[(int) file.length()];
-            fl.read(arr);
-            fl.close();
-            return arr;
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(check.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(check.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fl.close();
-            } catch (IOException ex) {
-                Logger.getLogger(check.class.getName()).log(Level.SEVERE, null, ex);
+        //demat fee
+        dematFee = 25;
+
+        //total fee
+        total = brokerFee + sebonFee + dematFee;
+
+        //capital gain tax
+        if (isSelling) {
+            double purchasedPrice=calculatTax(!isSelling, shares, purchasePrice, sellPrice);
+            double diffPrice = sellPrice - (purchasedPrice/shares);
+            if (diffPrice > 0.0) {
+                double perValue = (diffPrice* 0.05);
+                System.out.println(perValue);
+                tax = perValue * shares;
+                System.out.println(diffPrice);
             }
         }
-        return null;
+
+        //final amount
+        System.out.println(brokerFee + " " + sebonFee + " " + dematFee);
+        System.out.println("total: " + total);
+        System.out.println(tax);
+        double finalAmount = totalGain - total - tax;
+        //keep only 2 decimal places
+        finalAmount = Math.round(finalAmount * 100.0) / 100.0;
+        return finalAmount;
     }
 }

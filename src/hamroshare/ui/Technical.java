@@ -1,5 +1,6 @@
 package hamroshare.ui;
 
+import hamroapi.StockPrices;
 import hamroshare.dataalgorithms.SimpleMovingAverage;
 import hamroshare.chart.ModelChart;
 import java.awt.Color;
@@ -144,8 +145,8 @@ public class Technical extends javax.swing.JPanel {
 
         avragePrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         avragePrice.setForeground(new java.awt.Color(0, 255, 204));
-        avragePrice.setText("Average Price:");
-        roundPanel2.add(avragePrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        avragePrice.setText(" Predicted Price:");
+        roundPanel2.add(avragePrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 80, 330, -1));
 
         closingPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         closingPrice.setForeground(new java.awt.Color(0, 255, 204));
@@ -198,9 +199,9 @@ if (isfirst < 2) {
         } else {
             if ((String) companyComboBox1.getSelectedItem() != null) {
                 //System.out.println(companyComboBox1.getSelectedItem().toString());
-                company = companyComboBox1.getSelectedItem().toString() + ".csv";
-                lineChart.clear();
-                lineChart.repaint();
+                //company = companyComboBox1.getSelectedItem().toString() + ".csv";
+                ////lineChart.clear();
+                //lineChart.repaint();
                 new UpdateThisLineChart().start();
 
             }
@@ -267,7 +268,7 @@ if (isfirst < 2) {
         List<Double> avgPrices = SimpleMovingAverage.getMovingAverage(pricesPeriod, period);
         createChart(pricesPeriod, avgPrices);
         closingPrice.setText("Closing Price: Rs." + pricesPeriod[pricesPeriod.length - 1]);
-        avragePrice.setText("Average Price: Rs." + df.format(avgPrices.get(avgPrices.size() - 1)));
+        avragePrice.setText("Predicted Price: Rs." + df.format(avgPrices.get(avgPrices.size() - 1)));
     }
 
     static public class UpdateThisLineChart extends Thread {
@@ -275,13 +276,16 @@ if (isfirst < 2) {
         @Override
         public void run() {
             try {
+                company = companyComboBox1.getSelectedItem().toString() + ".csv";
+                lineChart.clear();
+                lineChart.repaint();
                 //lineChart.clear();
                 prices = StockPrices.getCompanyPrices();
                 averages = SimpleMovingAverage.getMovingAverage(prices, 30);
                 per1.doClick();
                 averagePrice = averages.get(averages.size() - 1);
                 closingPrice.setText("Closing Price: Rs." + prices[prices.length - 1]);
-                avragePrice.setText("Average Price: Rs." + df.format(averagePrice));
+                avragePrice.setText("Predicted Price: Rs." + df.format(averagePrice));
                 lineChart.repaint();
             } catch (IOException ex) {
                 Logger.getLogger(UpdateThisLineChart.class.getName()).log(Level.SEVERE, null, ex);
