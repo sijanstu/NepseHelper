@@ -1,6 +1,7 @@
 package hamroshare.dataalgorithms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hamroshare.config.HamroPath;
 import hamroshare.config.NepseColors;
 import hamroshare.dtos.CompanyDto;
 import hamroshare.ui.Home;
@@ -42,7 +43,7 @@ public class DashBoardAlgo extends Thread {
         int gaugeValue = gaugeChart.getValue();
         try {
             gaugeChart.setValueWithAnimation(0);
-            String url = "https://hamroapi.sijanbhandari.com.np/company/list";
+            String url = HamroPath.ApiHome+"company/list";
             String json = IOUtils.toString(new URL(url).openStream());
             //Document doc = Jsoup.connect(url)
              //   .userAgent("Mozilla")
@@ -65,7 +66,7 @@ public class DashBoardAlgo extends Thread {
             }
             int percentage = positiveCompanies * 100 / totalCompanies;
             gaugeChart.setValueWithAnimation(percentage);
-            Document page = Jsoup.parse(new URL(URL), 20000);
+            Document page = Jsoup.parse(new URL(HamroPath.NepalStock), 20000);
             // Elements box = page.getElementsByAttributeValueEnding("id","index_slider");
             String name = Xsoup.compile("//*[@id=\"banner\"]/div[1]/div[1]").evaluate(page).getElements().text();
             String value = Xsoup.compile("//*[@id=\"banner\"]/div[1]/div[2]").evaluate(page).getElements().text();
@@ -94,7 +95,7 @@ public class DashBoardAlgo extends Thread {
         } catch (IOException ex) {
           //  try {
                 gaugeChart.setValueWithAnimation(gaugeValue);
-                //String url = "https://hamroapi.sijanbhandari.com.np//company/refresh";
+                //String url = HamroPath.apiHome+"/company/refresh";
                 //Document doc = Jsoup.connect(url)
                 //        .userAgent("Mozilla")
                  //       .header("content-type", "application/json")
@@ -106,5 +107,4 @@ public class DashBoardAlgo extends Thread {
            // }
         }
     }
-    String URL = "http://www.nepalstock.com/";
 }

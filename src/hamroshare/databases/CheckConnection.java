@@ -1,5 +1,6 @@
 package hamroshare.databases;
 
+import hamroshare.config.HamroPath;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -21,7 +22,7 @@ public class CheckConnection extends Thread {
 
     @Override
     public void run() {
-        String urlString = "https://hamroapi.sijanbhandari.com.np/user/test/";
+        String urlString = HamroPath.ApiHome+"/user/test/";
         try {
             String value = IOUtils.toString(new URL(urlString).openStream());
             if(value.equals("true")){

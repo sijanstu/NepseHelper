@@ -1,6 +1,7 @@
 package hamroshare.dtos;
 
 import com.google.gson.Gson;
+import hamroshare.config.HamroPath;
 import hamroshare.login.LoginController;
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +27,7 @@ public class Portfolio {
     List<StockPortfolioDto> stocks;
     public static Portfolio getPortfolio() throws IOException {
         Long id=LoginController.userDto.getId();
-        String url="https://hamroapi.sijanbhandari.com.np/user/portfolio/"+id;
+        String url=HamroPath.ApiHome+"/user/portfolio/"+id;
         String json = IOUtils.toString(new URL(url).openStream());
         return new Gson().fromJson(json, Portfolio.class);
     }

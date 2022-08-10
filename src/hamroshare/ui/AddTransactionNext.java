@@ -1,6 +1,7 @@
 package hamroshare.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hamroshare.config.HamroPath;
 import hamroshare.dtos.CompanyDto;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -100,7 +101,7 @@ public final class AddTransactionNext extends javax.swing.JPanel {
 class CompanyList extends Thread{
     @Override
     public void run(){
-        String url="https://hamroapi.sijanbhandari.com.np/company/list";
+        String url=HamroPath.ApiHome+"/company/list";
         try {
             String json = IOUtils.toString(new URL(url).openStream());
             CompanyDto[] companies=new ObjectMapper().readValue(json, CompanyDto[].class);

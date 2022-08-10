@@ -1,5 +1,6 @@
 package hamroapi;
 
+import hamroshare.config.HamroPath;
 import hamroshare.ui.Technical;
 import static hamroshare.ui.Technical.company;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class StockPrices {
     public static double[] getCompanyPrices() throws MalformedURLException, IOException {
         company = company.replace(".csv", "");
         company = company.toUpperCase() + ".csv";
-        Document page = Jsoup.parse(new URL(LINK + company), 20000);
+        Document page = Jsoup.parse(new URL(HamroPath.HistoricNepse + company), 20000);
         Elements rows = page.getElementsByTag("tr");
         rows.remove(0);
         double[] prices = new double[rows.size()];
@@ -39,7 +40,7 @@ public class StockPrices {
 
     public static void getCompanyList() throws MalformedURLException, IOException {
         if (companyList == null) {
-            String content = IOUtils.toString(new URL(LINK).openStream());
+            String content = IOUtils.toString(new URL(HamroPath.HistoricNepse).openStream());
             Document page = Jsoup.parse(content);
             Elements rows = page.getElementsByAttributeValue("role", "grid").get(0).getElementsByTag("a");
             rows.remove(0);
@@ -74,5 +75,4 @@ public class StockPrices {
         }
 
     }
-    static final String LINK = "https://github.com/Aabishkar2/nepse-data/blob/main/data/company-wise/";
 }

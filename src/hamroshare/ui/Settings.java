@@ -114,41 +114,8 @@ public class Settings extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void simageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simageActionPerformed
-        JFileChooser file = new JFileChooser();
-        file.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "png");
-        file.addChoosableFileFilter(filter);
-        int res = file.showSaveDialog(null);
-        if (res == JFileChooser.APPROVE_OPTION) {
-            File selFile = file.getSelectedFile();
-            String path = selFile.getAbsolutePath();
-            ImageIcon imageIcon = new ImageIcon(path);
-            Image image = imageIcon.getImage();
-            Image newimg = image.getScaledInstance(simageavater.getHeight(), simageavater.getWidth(), java.awt.Image.SCALE_SMOOTH);
-            ImageIcon newImageIcon = new ImageIcon(newimg);
-            simageavater.setIcon(newImageIcon);
-            imagePath = path;
-            UserDto user = LoginController.userDto;
-            try {
-                user.setImage(Base64.encodeBase64URLSafeString(Files.readAllBytes(Paths.get(imagePath))));
-                UserDto newUser = LoginController.register(user);
-                LoginController.userDto.setImageUrl(newUser.getImageUrl());
-                LoginController.storeObject(LoginController.userDto);
-                LoginController.setImageIcon(newUser);
-                URL url = new URL(newUser.getImageUrl());
-                Image image1 = ImageIO.read(url);
-                Dash.dashAvatar.setIcon(new ImageIcon(image1));
-                Info.display(roundPanel1, "Task Successful, Relogin now", 1, 2000);
-                // LoginController.signOutUser();
-
-            } catch (IOException ex) {
-                Info.display(roundPanel1, "Task Failed, IO error", 0, 2000);
-                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Info.display(roundPanel1, "Task Failed, something wrong", 0, 2000);
-                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+      new ImageChanger().start();
+      
     }//GEN-LAST:event_simageActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -177,4 +144,46 @@ public class Settings extends javax.swing.JPanel {
     private rojeru_san.rsbutton.RSButtonRound simage;
     public static hamroshare.uicomponents.ImageAvatar simageavater;
     // End of variables declaration//GEN-END:variables
+class ImageChanger extends Thread{
+    @Override
+    public void run(){
+        JFileChooser file = new JFileChooser();
+        file.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "png");
+        file.addChoosableFileFilter(filter);
+        int res = file.showSaveDialog(null);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File selFile = file.getSelectedFile();
+            String path = selFile.getAbsolutePath();
+            ImageIcon imageIcon = new ImageIcon(path);
+            Image image = imageIcon.getImage();
+            Image newimg = image.getScaledInstance(simageavater.getHeight(), simageavater.getWidth(), java.awt.Image.SCALE_SMOOTH);
+            ImageIcon newImageIcon = new ImageIcon(newimg);
+            simageavater.setIcon(newImageIcon);
+            imagePath = path;
+            UserDto user = LoginController.userDto;
+            try {
+                Info.display(roundPanel1, "uploading", 1, 1000);
+                user.setImage(Base64.encodeBase64URLSafeString(Files.readAllBytes(Paths.get(imagePath))));
+                UserDto newUser = LoginController.register(user);
+                LoginController.userDto.setImageUrl(newUser.getImageUrl());
+                LoginController.storeObject(LoginController.userDto);
+                LoginController.setImageIcon(newUser);
+                URL url = new URL(newUser.getImageUrl());
+                Image image1 = ImageIO.read(url);
+                Dash.dashAvatar.setIcon(new ImageIcon(image1));
+                LoginController.signOutUser();
+                Info.display(roundPanel1, "Restart for changes", 1, 2000);
+                // LoginController.signOutUser();
+
+            } catch (IOException ex) {
+                Info.display(roundPanel1, "Task Failed, IO error", 0, 2000);
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Info.display(roundPanel1, "Task Failed, something wrong", 0, 2000);
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+}
 }

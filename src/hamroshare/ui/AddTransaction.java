@@ -1,5 +1,6 @@
 package hamroshare.ui;
 
+import hamroshare.config.HamroPath;
 import hamroshare.eventhandlers.Info;
 import hamroshare.login.LoginController;
 import hamroshare.ui.popup.Message;
@@ -121,7 +122,7 @@ class AddStock extends Thread {
                 } else {
                     try {
                         System.out.println(panel2.getCompany());
-                        URL url = new URL("https://hamroapi.sijanbhandari.com.np/user/portfolio/addstock/"
+                        URL url = new URL(HamroPath.ApiHome+"/user/portfolio/addstock/"
                                 + LoginController.userDto.getId() + "/"
                                 + panel2.getCompany() + "/"
                                 + Integer.parseInt(panel2.getUnits()) + "/"

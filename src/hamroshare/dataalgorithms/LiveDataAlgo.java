@@ -1,6 +1,7 @@
 package hamroshare.dataalgorithms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hamroshare.config.HamroPath;
 import hamroshare.config.NepseColors;
 import hamroshare.ui.LiveTable;
 
@@ -85,7 +86,7 @@ public class LiveDataAlgo extends Thread {
     }
 static String updateDate="";
     static CompanyDto[] getData() throws IOException {
-        String url = "https://hamroapi.sijanbhandari.com.np/company/list";
+        String url = HamroPath.ApiHome+"/company/list";
         String json = IOUtils.toString(new URL(url).openStream());
         return new ObjectMapper().readValue(json, CompanyDto[].class);
     }

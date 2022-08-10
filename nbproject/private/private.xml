@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Profile.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/AddTransaction.java</file>
             <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/login/LoginController.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/dtos/UserDto.java</file>
             <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Dash.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Sellpanel.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/dtos/UserLoginDto.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/dataalgorithms/LiveDataAlgo.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/dtos/StockDto.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/AddTransactionNext.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/config/HamroPath.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Settings.java</file>
         </group>
     </open-files>
 </project-private>

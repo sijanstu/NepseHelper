@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package hamroshare.ui;
 
+import hamroshare.config.HamroPath;
 import hamroshare.eventhandlers.Info;
 import hamroshare.login.LoginController;
 import hamroshare.ui.popup.Message;
 import hamroshare.uicomponents.Toaster;
-import java.awt.Panel;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -122,7 +118,7 @@ public class Sellpanel extends javax.swing.JPanel {
             } else {
                 URL url;
                 try {
-                    url = new URL("https://hamroapi.sijanbhandari.com.np/user/portfolio/sellstock/"
+                    url = new URL(HamroPath.ApiHome+"/user/portfolio/sellstock/"
                             + LoginController.userDto.getId() + "/"
                             + port.port.getName() + "/"
                             + sellingUnits + "/"
