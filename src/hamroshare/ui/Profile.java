@@ -1,5 +1,6 @@
 package hamroshare.ui;
 
+import hamroshare.config.HamroFetcher;
 import hamroshare.dtos.Portfolio;
 import hamroshare.dtos.StockPortfolioDto;
 import hamroshare.uicomponents.Toaster;
@@ -7,8 +8,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import org.apache.commons.io.IOUtils;
 import rojeru_san.efectos.ValoresEnum;
 import us.codecraft.xsoup.Xsoup;
 
@@ -330,7 +329,7 @@ class RefreshPortfolio extends Thread {
                 for (StockPortfolioDto port : portfolio.getStocks()) {
                     jtab.add(new StockPortfolio(port), port.getName());
                 }
-                String json1 = IOUtils.toString(new URL("http://www.nepalstock.com/").openStream());
+                String json1 = HamroFetcher.getData("http://www.nepalstock.com/");
                 String turnover = Xsoup.select(json1, "//*[@id=\"market-watch\"]/div[2]/table/tbody/tr[1]/td[2]").getElements().text();
                 String volume = Xsoup.select(json1, "//*[@id=\"market-watch\"]/div[2]/table/tbody/tr[2]/td[2]").getElements().text();
                 turnoverValue.setText("NPR " + turnover);//+totalTradedValue.substring(0, 3)+" Arba");

@@ -1,6 +1,7 @@
 package hamroshare.login;
 
 import com.google.gson.Gson;
+import hamroshare.config.HamroFetcher;
 import hamroshare.config.HamroPath;
 import hamroshare.dataalgorithms.MD5;
 import hamroshare.dtos.StoreDto;
@@ -29,7 +30,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import org.apache.commons.io.IOUtils;
 
 public class LoginController {
 
@@ -67,7 +67,7 @@ public class LoginController {
         String url = HamroPath.ApiHome+"/user/" + id;
         System.out.println(id);
         // Document doc = Jsoup.parse();
-        userDto = new Gson().fromJson(IOUtils.toString(new URL(url).openStream()), UserDto.class);
+        userDto = new Gson().fromJson(HamroFetcher.getData(url), UserDto.class);
         setImageIcon(userDto);
         return userDto;
     }

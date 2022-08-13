@@ -1,5 +1,6 @@
 package hamroshare.ui;
 
+import hamroshare.config.HamroFetcher;
 import hamroshare.config.HamroPath;
 import hamroshare.eventhandlers.Info;
 import hamroshare.login.LoginController;
@@ -8,7 +9,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -128,7 +128,7 @@ class AddStock extends Thread {
                                 + Integer.parseInt(panel2.getUnits()) + "/"
                                 + Double.parseDouble(panel2.getPrice()));
                         System.out.println(url);
-                        String json1 = IOUtils.toString(url.openStream());
+                        String json1 = HamroFetcher.getData(url.toString());
                         System.out.println(json1);
                         panel.setVisible(false);
                         profile.jtab.setVisible(true);

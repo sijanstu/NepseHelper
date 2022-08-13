@@ -1,6 +1,7 @@
 package hamroshare.dataalgorithms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hamroshare.config.HamroFetcher;
 import hamroshare.config.HamroPath;
 import hamroshare.config.NepseColors;
 import hamroshare.dtos.CompanyDto;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -44,7 +44,7 @@ public class DashBoardAlgo extends Thread {
         try {
             gaugeChart.setValueWithAnimation(0);
             String url = HamroPath.ApiHome+"company/list";
-            String json = IOUtils.toString(new URL(url).openStream());
+            String json = HamroFetcher.getData(url);
             //Document doc = Jsoup.connect(url)
              //   .userAgent("Mozilla")
              //   .header("content-type", "application/json")

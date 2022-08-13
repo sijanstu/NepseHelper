@@ -1,6 +1,7 @@
 package hamroshare.dataalgorithms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hamroshare.config.HamroFetcher;
 import hamroshare.config.HamroPath;
 import hamroshare.config.NepseColors;
 import hamroshare.ui.LiveTable;
@@ -17,8 +18,6 @@ import java.util.logging.Logger;
 
 import static hamroshare.dataalgorithms.SearchDataAlgo.companies;
 import hamroshare.dtos.CompanyDto;
-import java.net.URL;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -87,7 +86,7 @@ public class LiveDataAlgo extends Thread {
 static String updateDate="";
     static CompanyDto[] getData() throws IOException {
         String url = HamroPath.ApiHome+"/company/list";
-        String json = IOUtils.toString(new URL(url).openStream());
+        String json = HamroFetcher.getData(url);
         return new ObjectMapper().readValue(json, CompanyDto[].class);
     }
 }

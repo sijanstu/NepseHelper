@@ -1,5 +1,6 @@
 package hamroapi;
 
+import hamroshare.config.HamroFetcher;
 import hamroshare.config.HamroPath;
 import hamroshare.ui.Technical;
 import static hamroshare.ui.Technical.company;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,7 +40,7 @@ public class StockPrices {
 
     public static void getCompanyList() throws MalformedURLException, IOException {
         if (companyList == null) {
-            String content = IOUtils.toString(new URL(HamroPath.HistoricNepse).openStream());
+            String content = HamroFetcher.getData(HamroPath.HistoricNepse);
             Document page = Jsoup.parse(content);
             Elements rows = page.getElementsByAttributeValue("role", "grid").get(0).getElementsByTag("a");
             rows.remove(0);

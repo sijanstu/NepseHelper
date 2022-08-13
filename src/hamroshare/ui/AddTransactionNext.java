@@ -1,14 +1,13 @@
 package hamroshare.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hamroshare.config.HamroFetcher;
 import hamroshare.config.HamroPath;
 import hamroshare.dtos.CompanyDto;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -103,7 +102,7 @@ class CompanyList extends Thread{
     public void run(){
         String url=HamroPath.ApiHome+"/company/list";
         try {
-            String json = IOUtils.toString(new URL(url).openStream());
+            String json = HamroFetcher.getData(url);
             CompanyDto[] companies=new ObjectMapper().readValue(json, CompanyDto[].class);
             comboBox.removeAllItems();
             comboBox.addItem("Select Company");

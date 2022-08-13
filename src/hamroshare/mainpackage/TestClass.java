@@ -1,5 +1,6 @@
 package hamroshare.mainpackage;
 
+import hamroshare.config.HamroFetcher;
 import hamroshare.dtos.StockDto;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -103,7 +104,7 @@ public class TestClass {
             System.out.println(dateString);
             URL url = new URL("https://newweb.nepalstock.com/api/nots/market/export/todays-price/" + dateString);
             String content;
-            content = IOUtils.toString(url.openStream());
+            content = HamroFetcher.getData(url.toString());
             if (!content.equals("")) {
                 List<List<String>> records = new ArrayList<>();
                 try ( Scanner scanner = new Scanner(content)) {
