@@ -9,7 +9,6 @@ import hamroshare.dtos.UserLoginDto;
 import hamroshare.ui.Avatar;
 import hamroshare.uicomponents.ImageAvatar;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -56,7 +55,6 @@ public class LoginController {
                 .header("accept", "application/json")
                 .requestBody(json)
                 .ignoreContentType(true).post();
-
         System.out.println(doc.documentType());
         userDto = new Gson().fromJson(doc.text(), UserDto.class);
         setImageIcon(userDto);

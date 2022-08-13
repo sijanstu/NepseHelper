@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/login/LoginController.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Dash.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/config/HamroPath.java</file>
-            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Settings.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/notes/ViewNote.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/notes/NoteItem.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Login.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/config/HamroFetcher.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/notes/NoteList.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/notes/CreateNote.java</file>
+            <file>file:/C:/Users/Sijan%20Bhandari/Documents/GitHub/NepseHelper/src/hamroshare/ui/Notes.java</file>
         </group>
     </open-files>
 </project-private>

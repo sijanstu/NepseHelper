@@ -1,6 +1,7 @@
 package hamroshare.ui.notes;
 
 import hamroshare.dtos.Note;
+import hamroshare.ui.Notes;
 
 /**
  *
@@ -17,6 +18,7 @@ public class ViewNote extends javax.swing.JPanel {
    public void setNote(Note note) {
         this.title.setText(note.getTitle());
         this.note.setText(note.getDetail());
+        Notes.noteList.setVisible(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,27 +30,30 @@ public class ViewNote extends javax.swing.JPanel {
     private void initComponents() {
 
         roundPanel1 = new hamroshare.uicomponents.RoundPanel();
-        rSScrollPane1 = new necesario.RSScrollPane();
+        holder = new necesario.RSScrollPane();
         note = new javax.swing.JTextPane();
-        noteItem1 = new hamroshare.ui.notes.NoteItem();
-        rSButtonIconDos1 = new RSMaterialComponent.RSButtonIconDos();
         title = new javax.swing.JLabel();
+        rSButtonIconDos1 = new RSMaterialComponent.RSButtonIconDos();
 
         setBackground(new java.awt.Color(51, 51, 51));
-        setOpaque(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        roundPanel1.setBackground(new java.awt.Color(51, 51, 51));
         roundPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 102)));
 
-        rSScrollPane1.setBackground(new java.awt.Color(102, 102, 102));
-        rSScrollPane1.setColorBackground(new java.awt.Color(0, 102, 102));
+        holder.setBackground(new java.awt.Color(102, 102, 102));
+        holder.setColorBackground(new java.awt.Color(0, 102, 102));
 
-        note.setBorder(null);
+        note.setBackground(new java.awt.Color(51, 51, 51));
+        note.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
         note.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        rSScrollPane1.setViewportView(note);
+        note.setForeground(new java.awt.Color(255, 255, 255));
+        note.setCaretColor(new java.awt.Color(255, 255, 255));
+        holder.setViewportView(note);
 
-        noteItem1.setBackground(new java.awt.Color(102, 0, 0));
-        noteItem1.setForeground(new java.awt.Color(0, 102, 102));
+        title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setText("Note Title");
 
         rSButtonIconDos1.setBackground(new java.awt.Color(153, 0, 51));
         rSButtonIconDos1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
@@ -57,35 +62,34 @@ public class ViewNote extends javax.swing.JPanel {
                 rSButtonIconDos1ActionPerformed(evt);
             }
         });
-        noteItem1.add(rSButtonIconDos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 50, 50));
-
-        title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        title.setForeground(new java.awt.Color(255, 255, 255));
-        title.setText("Note Title");
-        noteItem1.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, -4, 200, 60));
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(noteItem1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSButtonIconDos1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(roundPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(rSScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 1, Short.MAX_VALUE)))
+                    .addComponent(holder, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         roundPanel1Layout.setVerticalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addComponent(noteItem1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rSButtonIconDos1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 287, Short.MAX_VALUE))
             .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(roundPanel1Layout.createSequentialGroup()
                     .addGap(0, 60, Short.MAX_VALUE)
-                    .addComponent(rSScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(holder, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -94,14 +98,14 @@ public class ViewNote extends javax.swing.JPanel {
 
     private void rSButtonIconDos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconDos1ActionPerformed
       this.setVisible(false);
+      Notes.noteList.setVisible(true);
     }//GEN-LAST:event_rSButtonIconDos1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private necesario.RSScrollPane holder;
     private javax.swing.JTextPane note;
-    private hamroshare.ui.notes.NoteItem noteItem1;
     private RSMaterialComponent.RSButtonIconDos rSButtonIconDos1;
-    private necesario.RSScrollPane rSScrollPane1;
     private hamroshare.uicomponents.RoundPanel roundPanel1;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables

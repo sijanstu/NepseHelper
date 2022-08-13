@@ -55,6 +55,8 @@ public final class Login extends JFrame {
         fullName = new RSMaterialComponent.RSTextFieldMaterial();
         simage = new rojeru_san.rsbutton.RSButtonRound();
         avatar2 = new hamroshare.ui.Avatar();
+        Server = new javax.swing.JComboBox<>();
+        Server1 = new javax.swing.JComboBox<>();
         close = new javax.swing.JLabel();
         close1 = new javax.swing.JLabel();
 
@@ -169,7 +171,15 @@ public final class Login extends JFrame {
         jp1.add(avatar2);
         avatar2.setBounds(30, 20, 120, 89);
 
-        getContentPane().add(jp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 185, 310));
+        Server.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default Database", "Heroku Database" }));
+        jp1.add(Server);
+        Server.setBounds(20, 340, 150, 22);
+
+        Server1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default Server", "Heroku Server" }));
+        jp1.add(Server1);
+        Server1.setBounds(20, 310, 150, 22);
+
+        getContentPane().add(jp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 185, 370));
 
         close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         close.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -332,6 +342,8 @@ public byte[] extractBytes(String ImageName) throws IOException {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Server;
+    private javax.swing.JComboBox<String> Server1;
     private hamroshare.ui.Avatar avatar2;
     public javax.swing.JLabel close;
     public javax.swing.JLabel close1;

@@ -1,13 +1,21 @@
 package hamroshare.ui.notes;
 
+import com.google.gson.Gson;
+import hamroshare.config.HamroFetcher;
+import hamroshare.config.HamroPath;
 import hamroshare.dtos.Note;
+import hamroshare.eventhandlers.Info;
+import hamroshare.login.LoginController;
+import hamroshare.ui.Dash;
+import hamroshare.ui.Notes;
 import java.awt.Cursor;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -20,8 +28,7 @@ public class NoteList extends javax.swing.JPanel {
      */
     public static NoteList noteList;
     ViewNote viewPanel;
-    Rectangle rect = new Rectangle(0, 10, 310, 60);
-    int ItemCount = 0;
+    
 
     public NoteList() {
         initComponents();
@@ -29,20 +36,7 @@ public class NoteList extends javax.swing.JPanel {
      }
 
     public void RefreshNotes() {
-        ArrayList<Note> notes = new ArrayList<>();
-        if(notes.isEmpty()){
-            EmptyNote noteItem = new EmptyNote();
-            noteItem.setBounds(rect);
-            add(noteItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(rect.getLocation()));
-        }
-        for (Note note : notes) {
-            NoteItem noteItem = new NoteItem(note);
-            setHandCurser(noteItem);
-            addClickListner(noteItem,note);
-            rect.setLocation(rect.x, rect.y+(ItemCount*70));
-            noteItem.setBounds(rect);
-            add(noteItem,rect);
-        }
+       new RefreshNote().start();
     }
 
     public void setViewPanel(ViewNote viewPanel) {
@@ -92,13 +86,76 @@ public class NoteList extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButton2 = new javax.swing.JRadioButton();
+        rSScrollPane1 = new necesario.RSScrollPane();
+        holder = new javax.swing.JPanel();
+
+        jRadioButton2.setText("jRadioButton2");
+
         setBackground(new java.awt.Color(51, 51, 51));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rSScrollPane1.setColorBackground(new java.awt.Color(51, 51, 51));
+
+        holder.setBackground(new java.awt.Color(51, 51, 51));
+        holder.setLayout(new com.gg.layout.WrapLayout());
+        rSScrollPane1.setViewportView(holder);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(rSScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rSScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 void setHandCurser(JPanel panel) {
         panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel holder;
+    private javax.swing.JRadioButton jRadioButton2;
+    private necesario.RSScrollPane rSScrollPane1;
     // End of variables declaration//GEN-END:variables
+class RefreshNote extends Thread{
+    @Override
+    public void run(){
+        try {
+            Rectangle rect = new Rectangle(0, 10, 310, 60);
+            //ArrayList<Note> notes = new ArrayList<>();
+            String url=HamroPath.ApiHome+"/user/note/list/"+LoginController.userDto.getId();
+            String json=HamroFetcher.getData(url);
+            System.out.println(json);
+            Note[] notes=new Gson().fromJson(json, Note[].class);
+            holder.removeAll();
+            if(notes.length<=0){
+                EmptyNote noteItem = new EmptyNote();
+                noteItem.setBounds(rect);
+                holder.add(noteItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(rect.getLocation()));
+            }
+            int itemCount=0;
+            
+            for (Note note : notes) {
+                NoteItem noteItem = new NoteItem(note);
+                setHandCurser(noteItem);
+                addClickListner(noteItem,note);
+                if(itemCount>0){
+                rect.setLocation(rect.x, rect.y+(itemCount+70));}
+                noteItem.setBounds(rect);
+                holder.add(noteItem);//,new org.netbeans.lib.awtextra.AbsoluteConstraints(rect.getLocation()));
+                itemCount++;
+            }
+            repaint();
+            Dash.dash.repaint();
+        } catch (IOException ex) {
+            Info.display(Notes.noteList, "Can't refresh", 0, 1000);
+            Logger.getLogger(NoteList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
 }

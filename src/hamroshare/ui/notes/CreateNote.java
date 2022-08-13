@@ -1,5 +1,18 @@
 package hamroshare.ui.notes;
 
+import com.google.gson.Gson;
+import hamroshare.config.HamroPath;
+import hamroshare.dtos.Note;
+import hamroshare.eventhandlers.Info;
+import hamroshare.login.LoginController;
+import hamroshare.ui.Dash;
+import hamroshare.ui.Notes;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 /**
  *
  * @author Sijan Bhandari
@@ -12,7 +25,10 @@ public class CreateNote extends javax.swing.JPanel {
     public CreateNote() {
         initComponents();
     }
-
+    public void createNote(){
+        this.setVisible(true);
+        Notes.noteList.setVisible(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -22,22 +38,92 @@ public class CreateNote extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        submit = new RSMaterialComponent.RSButtonIconDos();
+        title = new RSMaterialComponent.RSTextFieldMaterial();
+        detail = new javax.swing.JTextPane();
+        submit1 = new RSMaterialComponent.RSButtonIconDos();
+
         setBackground(new java.awt.Color(51, 51, 51));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
-        );
+        submit.setBackground(new java.awt.Color(255, 153, 153));
+        submit.setForegroundText(new java.awt.Color(255, 0, 0));
+        submit.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        submit.setTypeBorder(RSMaterialComponent.RSButtonIconDos.TYPEBORDER.CIRCLE);
+        submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitActionPerformed(evt);
+            }
+        });
+        add(submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 50, 50));
+
+        title.setBackground(new java.awt.Color(51, 51, 51));
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setCaretColor(new java.awt.Color(255, 255, 255));
+        title.setColorMaterial(new java.awt.Color(255, 255, 255));
+        title.setPhColor(new java.awt.Color(255, 255, 255));
+        title.setPlaceholder("Title");
+        add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 170, -1));
+
+        detail.setBackground(new java.awt.Color(51, 51, 51));
+        detail.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 204)), new javax.swing.border.LineBorder(new java.awt.Color(51, 0, 255), 1, true)));
+        detail.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        detail.setForeground(new java.awt.Color(255, 255, 255));
+        detail.setCaretColor(new java.awt.Color(255, 255, 255));
+        add(detail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 260, 260));
+
+        submit1.setBackground(new java.awt.Color(153, 255, 204));
+        submit1.setForegroundText(new java.awt.Color(0, 153, 153));
+        submit1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
+        submit1.setTypeBorder(RSMaterialComponent.RSButtonIconDos.TYPEBORDER.CIRCLE);
+        submit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submit1ActionPerformed(evt);
+            }
+        });
+        add(submit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 50, 50));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
+            this.setVisible(false);
+            Notes.noteList.setVisible(true);
+    }//GEN-LAST:event_submitActionPerformed
+
+    private void submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submit1ActionPerformed
+      new CreateNoteThread().start();
+    }//GEN-LAST:event_submit1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane detail;
+    private RSMaterialComponent.RSButtonIconDos submit;
+    private RSMaterialComponent.RSButtonIconDos submit1;
+    private RSMaterialComponent.RSTextFieldMaterial title;
     // End of variables declaration//GEN-END:variables
+class CreateNoteThread extends Thread{
+    @Override
+    public void run(){
+        String url=HamroPath.ApiHome+"/user/note/create";
+        Note note=new Note();
+        note.setDetail(detail.getText());
+        note.setTitle(title.getText());
+        note.setUserId(LoginController.userDto.getId());
+        String json = new Gson().toJson(note);
+        try {
+            Document doc = Jsoup.connect(url)
+                    .userAgent("Mozilla")
+                    .header("content-type", "application/json")
+                    .header("accept", "application/json")
+                    .requestBody(json)
+                    .ignoreContentType(true).post();
+            setVisible(false);
+            Notes.noteList.setVisible(true);
+            Notes.noteList.RefreshNotes();
+        } catch (IOException ex) {
+            Info.display(Notes.noteInstance, "couldn't add note", 0, 1000);
+            Logger.getLogger(CreateNote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
 }

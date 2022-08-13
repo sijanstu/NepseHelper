@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class Note {
     private Long id;
-    private Long UserId;
+    private Long userId;
     private String title;
-    private String Detail;
+    private String detail;
 }
